@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiche de révision 1re SI séquence 1</title>
+<style>
+/* Mise en page : colonne unique de lecture, cartes de notions en grille, atelier de série plein écran sur mobile.
+   Palette : bleu du projet (1F4E79), turquoise « énergie » pour les formules, vert/ambre/rouge réservés à l'état des réponses. */
+:root {
+  --bg: #F3F6FA; --surface: #FFFFFF; --surface-2: #E8EEF6; --ink: #13233A; --ink-2: #4A5B73; --line: #D3DCE8;
+  --accent: #1F4E79; --accent-ink: #FFFFFF; --accent-soft: #DCE8F5; --energy: #0B6E78; --energy-soft: #DDF1F2;
+  --good: #1B7F4B; --good-soft: #DDF3E6; --bad: #B02020; --bad-soft: #FBE3E3; --warn: #8A5700; --warn-soft: #FBEFD2;
+  --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-disp: 'Barlow Condensed', 'Arial Narrow', Impact, sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1A2B; --surface: #17263B; --surface-2: #1E3150; --ink: #E6EDF7; --ink-2: #9FB0C7; --line: #2B3F5E;
+    --accent: #7FB2E8; --accent-ink: #0F1A2B; --accent-soft: #213A5C; --energy: #4FC3CC; --energy-soft: #153A44;
+    --good: #55C48A; --good-soft: #173A2A; --bad: #FF8A8A; --bad-soft: #4A2328; --warn: #F0B454; --warn-soft: #45351A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1A2B; --surface: #17263B; --surface-2: #1E3150; --ink: #E6EDF7; --ink-2: #9FB0C7; --line: #2B3F5E;
+  --accent: #7FB2E8; --accent-ink: #0F1A2B; --accent-soft: #213A5C; --energy: #4FC3CC; --energy-soft: #153A44;
+  --good: #55C48A; --good-soft: #173A2A; --bad: #FF8A8A; --bad-soft: #4A2328; --warn: #F0B454; --warn-soft: #45351A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.55 var(--f-body); -webkit-text-size-adjust: 100%; }
+sub, sup { line-height: 0; font-size: .75em; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.wrap { max-width: 1040px; margin-inline: auto; padding-inline: 16px; padding-block: 14px 40px; }
+
+/* barre du haut */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-block: 4px 14px; border-bottom: 1px solid var(--line); }
+.eyebrow { font: 500 12px/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.tabs { display: flex; gap: 4px; }
+.tab { min-height: 40px; padding: 0 14px; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; cursor: pointer; font-weight: 500; }
+.tab[aria-current="page"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+/* accueil */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: end; padding-block: 22px 18px; }
+.hero h1 { margin: 6px 0 6px; font: 700 clamp(34px, 6vw, 52px)/1 var(--f-disp); letter-spacing: .005em; text-transform: uppercase; text-wrap: balance; }
+.hero p { margin: 0; max-width: 56ch; color: var(--ink-2); }
+.score { text-align: right; }
+.score .row { justify-content: flex-end; }
+.score b { display: block; font: 700 54px/1 var(--f-disp); color: var(--accent); font-variant-numeric: tabular-nums; }
+.score span { font-size: 13px; color: var(--ink-2); }
+.score b small { font-size: .5em; color: var(--ink-2); }
+.note { margin: 0 0 14px; padding: 10px 14px; border-radius: 6px; background: var(--warn-soft); color: var(--ink); border: 1px solid var(--line); font-size: 14px; }
+.note.ok { background: var(--good-soft); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card h2 { margin: 0; font: 700 25px/1.1 var(--f-disp); letter-spacing: .01em; text-wrap: balance; }
+.card p { margin: 0; color: var(--ink-2); font-size: 14px; }
+.meter { display: flex; align-items: center; gap: 10px; }
+.bar { flex: 1; height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 99px; background: var(--ink-2); }
+.bar.good i { background: var(--good); } .bar.warn i { background: var(--warn); } .bar.bad i { background: var(--bad); }
+.pct { font: 500 14px var(--f-mono); min-width: 4ch; text-align: right; font-variant-numeric: tabular-nums; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.pill { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 12px; font-weight: 600; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink-2); }
+.pill.good { background: var(--good-soft); color: var(--good); border-color: transparent; }
+.pill.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+.pill.bad { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
+.btn { min-height: 44px; padding: 0 18px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); font-weight: 600; cursor: pointer; }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; filter: none; }
+.general { margin-top: 14px; flex-direction: row; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--accent-soft); border-color: transparent; }
+.general h2 { font-size: 25px; }
+.foot { margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; font-style: italic; color: var(--ink-2); }
+
+/* à retenir */
+.back { background: none; border: 0; padding: 8px 0; color: var(--accent); font-weight: 600; cursor: pointer; min-height: 40px; }
+.title { margin: 4px 0 16px; font: 700 clamp(30px, 5vw, 44px)/1.05 var(--f-disp); text-transform: uppercase; text-wrap: balance; }
+.sec { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+.sec h3 { margin: 0 0 8px; font: 600 12px/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.sec p { margin: 6px 0; max-width: 70ch; }
+.f { margin: 6px 0; padding: 8px 12px; background: var(--energy-soft); color: var(--ink); border-radius: 6px; font: 500 15px/1.6 var(--f-mono); overflow-wrap: anywhere; }
+.tblwrap { overflow-x: auto; max-width: 100%; }
+table.rap { border-collapse: collapse; min-width: 420px; width: 100%; }
+table.rap th, table.rap td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+table.rap th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); }
+
+/* série */
+.qhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.qhead strong { font: 700 22px/1.1 var(--f-disp); text-transform: uppercase; letter-spacing: .01em; }
+.steps { display: flex; gap: 5px; margin-bottom: 14px; }
+.steps i { flex: 1; height: 8px; border-radius: 99px; background: var(--surface-2); }
+.steps i.cur { background: var(--accent); } .steps i.ok { background: var(--good); } .steps i.ko { background: var(--bad); }
+.q { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px 16px; }
+.q .kind { font: 500 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 8px; }
+.q p { margin: 0 0 10px; max-width: 68ch; font-size: 16px; }
+.opts { display: grid; gap: 8px; margin-top: 10px; }
+.opt { display: flex; gap: 12px; align-items: flex-start; text-align: left; width: 100%; min-height: 48px; padding: 10px 12px; background: var(--surface); border: 1.5px solid var(--line); border-radius: 6px; cursor: pointer; }
+.opt:hover:not([disabled]) { border-color: var(--accent); }
+.opt .l { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 600 13px var(--f-mono); background: var(--surface-2); }
+.opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt .tag { margin-left: auto; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.ans { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.ans label { font-weight: 600; }
+.ans input { width: 11ch; min-height: 44px; padding: 0 12px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--bg); font: 500 17px var(--f-mono); }
+.ans input:focus-visible { border-color: var(--accent); }
+.unit { font: 500 16px var(--f-mono); color: var(--ink-2); }
+.fig { margin: 8px 0 12px; max-width: 560px; }
+.plot { width: 100%; height: auto; display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.plot .gm { stroke: var(--line); stroke-width: .5; opacity: .6; } .plot .gl { stroke: var(--line); stroke-width: 1; }
+.plot .ax { stroke: var(--ink-2); stroke-width: 1.5; } .plot .tk { fill: var(--ink-2); font: 11px var(--f-mono); } .plot .al { fill: var(--ink); font: 600 12px var(--f-body); }
+.plot .curve { stroke: var(--accent); stroke-width: 2.5; fill: none; } .plot .guide { stroke: var(--energy); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.plot .pt { fill: var(--surface); stroke: var(--accent); stroke-width: 2.5; } .plot .pl { fill: var(--ink); font: 700 13px var(--f-body); }
+.plot .area { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+table.plaque { border-collapse: collapse; margin: 6px 0 12px; min-width: 300px; }
+table.plaque th, table.plaque td { border: 1px solid var(--line); padding: 6px 12px; text-align: left; }
+table.plaque th { background: var(--surface-2); font-weight: 500; }
+table.plaque td { font: 500 15px var(--f-mono); }
+
+/* classement */
+.bank { display: flex; gap: 8px; flex-wrap: wrap; min-height: 48px; padding: 8px; border: 1.5px dashed var(--line); border-radius: 6px; margin-block: 8px 12px; }
+.chip { min-height: 40px; padding: 6px 12px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 6px; cursor: grab; font-weight: 500; text-align: left; }
+.chip.sel { border-color: var(--accent); background: var(--accent-soft); }
+.chip.right { border-color: var(--good); background: var(--good-soft); } .chip.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.zones { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 10px; }
+.zone { min-height: 112px; padding: 10px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--bg); display: flex; flex-direction: column; gap: 8px; cursor: pointer; text-align: left; }
+.zone.over, .zone.armed:hover { border-color: var(--accent); background: var(--accent-soft); }
+.zone b { font: 600 13px var(--f-mono); letter-spacing: .04em; text-transform: uppercase; }
+.zone .in { display: flex; flex-wrap: wrap; gap: 6px; }
+.hintline { font-size: 13px; color: var(--ink-2); margin: 0; }
+
+
+.row.end { justify-content: flex-end; margin-top: 10px; }
+.ans input.wide { width: min(100%, 26ch); font: 500 16px var(--f-body); }
+.txt { width: 100%; margin: 6px 0 10px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); font: 400 13px/1.55 var(--f-mono); resize: vertical; }
+
+/* retour */
+.fb { margin-top: 16px; padding: 14px 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2); }
+.fb.ok { background: var(--good-soft); } .fb.ko { background: var(--bad-soft); }
+.fb h4 { margin: 0 0 6px; font: 700 20px/1.1 var(--f-disp); text-transform: uppercase; letter-spacing: .02em; }
+.fb.ok h4 { color: var(--good); } .fb.ko h4 { color: var(--bad); }
+.fb p { margin: 6px 0; font-size: 15px; }
+.fb .sol { font-size: 15px; line-height: 1.75; overflow-wrap: anywhere; }
+.next { margin-top: 14px; display: flex; justify-content: flex-end; }
+.err { color: var(--bad); font-size: 14px; margin: 8px 0 0; }
+
+/* bilan */
+.big { font: 700 72px/1 var(--f-disp); color: var(--accent); font-variant-numeric: tabular-nums; }
+.rec { list-style: none; margin: 12px 0; padding: 0; display: grid; gap: 6px; }
+.rec li { display: flex; gap: 10px; align-items: baseline; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.rec .m { font: 700 13px var(--f-mono); min-width: 4.5em; }
+.rec .m.ok { color: var(--good); } .rec .m.ko { color: var(--bad); }
+
+/* suivi */
+.dash { overflow-x: auto; max-width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table.dt { border-collapse: collapse; width: 100%; min-width: 760px; }
+table.dt th, table.dt td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+table.dt th { font: 500 11px/1.3 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); background: var(--surface-2); }
+table.dt td.c { text-align: center; font: 500 14px var(--f-mono); font-variant-numeric: tabular-nums; }
+.cell { white-space: nowrap; display: inline-block; min-width: 4.4ch; padding: 3px 8px; border-radius: 5px; background: var(--surface-2); }
+.cell.good { background: var(--good-soft); color: var(--good); } .cell.warn { background: var(--warn-soft); color: var(--warn); } .cell.bad { background: var(--bad-soft); color: var(--bad); }
+table.dt tr.avg td { font-weight: 600; background: var(--surface-2); }
+.dim { color: var(--ink-2); font-size: 13px; }
+table.dt td.c .dim { white-space: nowrap; }
+.hard { display: grid; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+.hard li { display: flex; gap: 10px; align-items: baseline; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.hard .m { font: 700 13px var(--f-mono); color: var(--bad); min-width: 7ch; }
+.empty { padding: 28px 16px; text-align: center; background: var(--surface); border: 1px dashed var(--line); border-radius: 8px; color: var(--ink-2); }
+
+@media (max-width: 560px) {
+  .hero { grid-template-columns: 1fr; } .score { text-align: left; }
+  .q { padding: 14px 12px; } .next .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: no-preference) { .bar i, .steps i { transition: width .3s, background-color .2s; } }
+
+/* diagrammes SysML (SVG inline) */
+.dg { width: 100%; height: auto; display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-block: 10px; }
+.dg text { fill: var(--ink); font: 500 12.5px var(--f-body); }
+.dg text.st { fill: var(--ink-2); font: italic 400 11.5px var(--f-body); }
+.dg text.bd { font-weight: 600; } .dg text.tx { font-weight: 500; } .dg text.sm { font-weight: 500; font-size: 11px; }
+.dg text.hd { fill: var(--accent); font: 600 11px var(--f-mono); letter-spacing: .05em; }
+.dg text.fn { fill: var(--accent); font: 700 12.5px var(--f-body); }
+.dg text.bn { fill: var(--accent); font: 700 15px var(--f-body); }
+.dg .bk { fill: var(--surface); stroke: var(--ink-2); stroke-width: 1.5; }
+.dg .bk.rq { fill: var(--accent-soft); stroke: var(--accent); }
+.dg .fr { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.dg .lb { fill: var(--surface); }
+.dg .ln { stroke: var(--ink-2); stroke-width: 1.6; fill: none; }
+.dg .ln.ds { stroke-dasharray: 6 4; }
+.dg .ln.en { stroke: var(--energy); stroke-width: 2.6; }
+.dg .ln.inf { stroke: var(--accent); stroke-dasharray: 6 4; }
+.dg .ln.sep { stroke: var(--line); stroke-width: 1; }
+.dg .ac { fill: var(--surface); stroke: var(--ink); stroke-width: 1.6; }
+.dg .bl { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.8; stroke-dasharray: 5 3; }
+.dg .pt { fill: var(--surface); stroke: var(--ink-2); stroke-width: 1.4; }
+.dg .mk { fill: var(--ink-2); stroke: var(--ink-2); } .dg .mo { fill: none; stroke: var(--ink-2); stroke-width: 1.6; } .dg .mh { fill: var(--surface); stroke: var(--ink-2); stroke-width: 1.6; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>window.__STANDALONE = true;</script>
+<script>
+/* Banque de questions — 1re SI, séquence 1 (analyser un produit : SysML, chaînes d'énergie et d'information) */
+(function (root) {
+  'use strict';
+  const rnd = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const nf = (x, sig) => { if (!isFinite(x)) return '—'; const v = Number(Number(x).toPrecision(sig || 4)); return v.toLocaleString('fr-FR', { maximumFractionDigits: 6 }); };
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const wrap = (s, max) => { const out = []; let cur = ''; String(s).split(' ').forEach(x => { if (!cur) cur = x; else if ((cur + ' ' + x).length <= max) cur += ' ' + x; else { out.push(cur); cur = x; } }); if (cur) out.push(cur); return out; };
+
+  /* QCM à une bonne réponse (la première), options mélangées à chaque tirage */
+  const Q = (id, label, stem, good, bads, sol) => ({
+    id, label, kind: 'qcm',
+    make() {
+      const opts = shuffle([good].concat(bads).map((t, i) => ({ t, ok: i === 0 })));
+      return { html: '<p>' + stem + '</p>', options: opts.map(o => o.t), correct: opts.findIndex(o => o.ok), sol };
+    }
+  });
+
+  /* ---------- Kit de dessin SysML (SVG inline, couleurs par jetons CSS) ---------- */
+  const DEFS = '<defs>'
+    + '<marker id="mA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="mk" d="M0,0 L10,5 L0,10 Z"/></marker>'
+    + '<marker id="mV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="mo" d="M0,0 L10,5 L0,10"/></marker>'
+    + '<marker id="mT" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path class="mh" d="M0,0 L13,7 L0,14 Z"/></marker>'
+    + '<marker id="mD" viewBox="0 0 20 12" refX="19" refY="6" markerWidth="20" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path class="mk" d="M0,6 L9,0 L19,6 L9,12 Z"/></marker>'
+    + '</defs>';
+  const svg = (W, H, alt, inner) => '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(alt) + '" class="dg">' + DEFS + inner + '</svg>';
+  const T = (x, y, s, cls, anchor) => '<text x="' + x + '" y="' + y + '"' + (cls ? ' class="' + cls + '"' : '') + ' text-anchor="' + (anchor || 'middle') + '">' + esc(s) + '</text>';
+  const L = (x1, y1, x2, y2, cls, m) => '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" class="ln ' + (cls || '') + '"' + (m ? ' marker-end="url(#' + m + ')"' : '') + '/>';
+  const R = (x, y, w, h, cls, rx) => '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + (rx == null ? 4 : rx) + '" class="' + cls + '"/>';
+  /* repère à compléter : rectangle pointillé avec un numéro */
+  const blank = (cx, cy, n, w, h) => R(cx - w / 2, cy - h / 2, w, h, 'bl', 6) + '<text x="' + cx + '" y="' + (cy + 5) + '" text-anchor="middle" class="bn">' + n + '</text>';
+  /* étiquette sur un trait (fond opaque pour masquer le trait) */
+  const lab = (cx, cy, s) => { const w = Math.round(s.length * 5.9 + 8); return R(cx - w / 2, cy - 9, w, 17, 'lb', 3) + T(cx, cy + 4, s, 'st'); };
+  /* lignes de texte centrées verticalement ; la première peut être un stéréotype */
+  function lines(cx, cy, arr, st) {
+    const m = arr.length; let s = '';
+    arr.forEach((t, i) => { const a = Array.isArray(t); s += T(cx, Math.round(cy + (i - (m - 1) / 2) * 15 + 4.5), a ? t[0] : t, a ? t[1] : (st && i === 0 ? 'st' : 'bd')); });
+    return s;
+  }
+  /* bloc SysML : rectangle + stéréotype facultatif + nom */
+  function blk(x, y, w, h, name, st, cls) {
+    const k = w >= 120 ? ['bd', 7.6] : w >= 100 ? ['tx', 7.0] : ['sm', 6.4];
+    const nm = wrap(name, Math.max(6, Math.floor((w - 10) / k[1]))).map(t => [t, k[0]]);
+    return R(x, y, w, h, 'bk ' + (cls || '')) + lines(x + w / 2, y + h / 2, (st ? [st] : []).concat(nm), !!st);
+  }
+  function uc(cx, cy, rx, ry, name, max) {
+    return '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" class="bk"/>' + lines(cx, cy, wrap(name, max || 19));
+  }
+  function actor(cx, y, name) {
+    const nm = wrap(name, 14);
+    let s = '<circle cx="' + cx + '" cy="' + (y + 7) + '" r="6" class="ac"/>'
+      + L(cx, y + 13, cx, y + 29, 'ac') + L(cx - 11, y + 19, cx + 11, y + 19, 'ac') + L(cx, y + 29, cx - 9, y + 43, 'ac') + L(cx, y + 29, cx + 9, y + 43, 'ac');
+    nm.forEach((t, i) => { s += T(cx, y + 58 + i * 14, t, 'bd'); });
+    return s;
+  }
+  const SHEAD = '«', STAIL = '»';
+  const guil = s => SHEAD + s + STAIL;
+  const circled = n => n;
+
+  /* ---------- Classement et complétion : fabrique commune ---------- */
+  const classFrom = (map, perCat, intro) => () => {
+    const cats = Object.keys(map), items = [];
+    cats.forEach((c, k) => shuffle(map[c]).slice(0, perCat).forEach(t => items.push({ t, c: k })));
+    return { html: '<p>' + intro + '</p>', cats, items: shuffle(items), sol: cats.map(c => '<b>' + c + '</b> : ' + items.filter(i => cats[i.c] === c).map(i => i.t).join(', ')).join('<br>') };
+  };
+  /* diagramme à compléter : chaque repère numéroté reçoit un élément */
+  const complete = (intro, svgStr, answers, why) => ({
+    html: '<p>' + intro + '</p>' + svgStr,
+    cats: answers.map((a, k) => 'Repère ' + (k + 1)),
+    items: shuffle(answers.map((t, k) => ({ t, c: k }))),
+    sol: answers.map((t, k) => '<b>Repère ' + (k + 1) + '</b> : ' + t).join('<br>') + (why ? '<br>' + why : '')
+  });
+
+  /* ---------- 1. Exigences et cas d'utilisation ---------- */
+  const UCS = [
+    { sys: 'Serrure biométrique', pairs: [['Ouvrir la porte', 'Utilisateur'], ['Enregistrer une empreinte', 'Administrateur'], ['Remplacer la pile', 'Technicien de maintenance']], ex: { type: 'include', t: 'Identifier l’utilisateur' } },
+    { sys: 'Radio-réveil', pairs: [['Se faire réveiller', 'Utilisateur'], ['Recevoir l’heure', 'Émetteur horaire'], ['Alimenter le réveil', 'Réseau électrique']], ex: { type: 'extend', t: 'Reporter l’alarme' } },
+    { sys: 'Visseuse sans fil', pairs: [['Visser une vis', 'Opérateur'], ['Recharger la batterie', 'Réseau électrique'], ['Entretenir la visseuse', 'Technicien de maintenance']], ex: { type: 'include', t: 'Choisir le sens de rotation' } },
+    { sys: 'Portail automatique', pairs: [['Fermer le portail', 'Utilisateur'], ['Programmer la télécommande', 'Installateur'], ['Alimenter l’automatisme', 'Réseau électrique']], ex: { type: 'extend', t: 'Rouvrir en cas d’obstacle' } },
+    { sys: 'Distributeur de boissons', pairs: [['Acheter une boisson', 'Client'], ['Réapprovisionner les stocks', 'Livreur'], ['Collecter les pièces', 'Gestionnaire']], ex: { type: 'include', t: 'Payer' } }
+  ];
+  const ACTORS = ['Utilisateur', 'Administrateur', 'Technicien de maintenance', 'Réseau électrique', 'Installateur', 'Client', 'Livreur', 'Opérateur', 'Émetteur horaire'];
+  function ucSvg(ds, blanks) {
+    const n = ds.pairs.length, RH = 84, top = 36, H = top + n * RH + 24;
+    const cyOf = i => top + RH * i + RH / 2;
+    let s = R(112, 6, 384, H - 18, 'fr', 8) + T(304, 26, ds.sys, 'hd');
+    ds.pairs.forEach((p, i) => {
+      const cy = cyOf(i), bl = blanks && blanks[i];
+      s += L(bl ? 84 : 68, cy, 118, cy, 'ac') + uc(196, cy, 78, 25, p[0], 18) + (bl ? blank(56, cy, bl, 56, 52) : actor(56, cy - 19, p[1]));
+    });
+    if (ds.ex) {
+      const cy = cyOf(0);
+      s += uc(424, cy, 66, 25, ds.ex.t, 16);
+      s += ds.ex.type === 'include' ? L(274, cy, 358, cy, 'ds', 'mV') : L(358, cy, 274, cy, 'ds', 'mV');
+      s += lab(316, cy, guil(ds.ex.type));
+    }
+    return svg(500, H, 'Diagramme des cas d’utilisation : ' + ds.sys, s);
+  }
+
+  const REQS = [
+    { sys: 'Serrure biométrique', id: '1.1', t: 'Ouvrir en moins de 2\u00a0s', block: 'Lecteur d’empreinte', test: 'Essai chronométré', uc: 'Ouvrir la porte', did: '1.1.1', dt: 'Lire l’empreinte en moins de 0,5\u00a0s' },
+    { sys: 'Visseuse sans fil', id: '2.1', t: 'Visser avec un couple de 20\u00a0N·m', block: 'Moteur et réducteur', test: 'Mesure au couplemètre', uc: 'Visser une vis', did: '2.1.1', dt: 'Fournir un couple moteur de 1\u00a0N·m' },
+    { sys: 'Portail automatique', id: '3.1', t: 'Ouvrir en moins de 20\u00a0s', block: 'Motoréducteur', test: 'Mesure du temps', uc: 'Ouvrir le portail', did: '3.1.1', dt: 'Déplacer le vantail à 0,2\u00a0m/s' }
+  ];
+  const RELS = ['satisfy', 'verify', 'refine', 'deriveReqt'];
+  function reqSvg(ds, bl) {
+    const rq = (x, y, w, h, id, t, cls) => R(x, y, w, h, 'bk ' + (cls || '')) + lines(x + w / 2, y + h / 2, [guil('requirement'), ['Exigence ' + id, 'tx']].concat(wrap(t, Math.floor((w - 12) / 7)).map(l => [l, 'tx'])), true);
+    const tag = (rel, cx, cy) => bl && bl[rel] ? blank(cx, cy, bl[rel], 40, 22) : lab(cx, cy, guil(rel));
+    let s = '';
+    s += L(250, 56, 250, 116, 'ds', 'mV') + L(104, 151, 170, 151, 'ds', 'mV') + L(396, 151, 330, 151, 'ds', 'mV') + L(250, 236, 250, 190, 'ds', 'mV');
+    s += uc(250, 34, 84, 22, ds.uc, 22) + blk(2, 126, 102, 50, ds.block, guil('block')) + blk(396, 126, 102, 50, ds.test, guil('testCase'));
+    s += rq(170, 116, 160, 74, ds.id, ds.t, 'rq') + rq(140, 236, 220, 72, ds.did, ds.dt, 'rq');
+    s += tag('refine', 250, 86) + tag('satisfy', 137, 151) + tag('verify', 363, 151) + tag('deriveReqt', 250, 213);
+    return svg(500, 314, 'Diagramme des exigences : ' + ds.sys, s);
+  }
+
+  const EXI_REQ = {
+    'Exigence': ['Temps d’ouverture inférieur à 2 s', 'Masse inférieure à 1,2 kg', 'Autonomie supérieure à 8 h', 'Tension d’alimentation de 12 V', 'Niveau sonore inférieur à 60 dB', 'Fonctionnement entre −10 °C et 50 °C'],
+    'Cas d’utilisation': ['Ouvrir la porte', 'Régler l’heure', 'Recharger la batterie', 'Enregistrer une empreinte', 'Visser une vis', 'Programmer une alarme'],
+    'Acteur': ['Utilisateur', 'Installateur', 'Technicien de maintenance', 'Réseau électrique', 'Administrateur', 'Émetteur horaire']
+  };
+  const MES = [
+    { n: 'le temps d’ouverture', u: 's', lim: 2, mode: 'max', sp: .6, d: 1 },
+    { n: 'le temps de réponse', u: 's', lim: 0.5, mode: 'max', sp: .2, d: 2 },
+    { n: 'la masse', u: 'kg', lim: 1.2, mode: 'max', sp: .3, d: 2 },
+    { n: 'l’autonomie', u: 'h', lim: 8, mode: 'min', sp: 2.5, d: 1 },
+    { n: 'la tension de sortie', u: 'V', lim: 5, mode: 'min', sp: .4, d: 1 }
+  ];
+  const exi = [
+    { id: 'x1', label: 'Exigence, cas d’utilisation ou acteur ?', kind: 'class', make: classFrom(EXI_REQ, 2, 'Classe chaque élément : est-ce une <strong>exigence</strong>, un <strong>cas d’utilisation</strong> ou un <strong>acteur</strong> ?') },
+    {
+      id: 'x2', label: 'Compléter un diagramme des cas d’utilisation', kind: 'class', tag: 'Compléter un diagramme', make() {
+        const ds = pick(UCS), idx = shuffle(ds.pairs.map((p, i) => i)), blanks = {};
+        idx.forEach((i, k) => blanks[i] = k + 1);
+        const answers = []; idx.forEach(i => answers.push(ds.pairs[i][1]));
+        return complete('Dans ce diagramme du système « ' + ds.sys + ' », les <strong>acteurs</strong> repérés par un numéro sont masqués. Place chaque acteur à sa place en lisant le cas d’utilisation auquel il est relié.', ucSvg(ds, blanks), answers, 'Un acteur est extérieur au système ; il est relié par un trait au service dont il a besoin.');
+      }
+    },
+    {
+      id: 'x3', label: 'Compter les éléments d’un diagramme de cas d’utilisation', kind: 'num', tag: 'Lire un diagramme', make() {
+        const ds = pick(UCS), nUC = ds.pairs.length + 1, nAc = ds.pairs.length, what = Math.random() < .6;
+        const html = '<p>' + (what ? 'Combien de <strong>cas d’utilisation</strong> (ellipses) sont représentés dans ce diagramme ?' : 'Combien d’<strong>acteurs</strong> sont représentés dans ce diagramme ?') + '</p>' + ucSvg(ds);
+        return what
+          ? { html, unit: 'cas d’utilisation', ans: nUC, tol: .01, sol: 'Il y a ' + ds.pairs.length + ' cas principaux, plus le cas relié par « ' + ds.ex.type + ' » : <b>' + nUC + '</b>.', traps: [{ v: nAc, msg: 'Tu as oublié le cas relié par une flèche pointillée : c’est aussi un cas d’utilisation (une ellipse).' }] }
+          : { html, unit: 'acteurs', ans: nAc, tol: .01, sol: 'Les acteurs sont les personnages (ou systèmes) en dehors du rectangle : <b>' + nAc + '</b>.', traps: [{ v: nUC, msg: 'Tu as compté les ellipses. Un acteur est un personnage placé en dehors du rectangle du système.' }] };
+      }
+    },
+    {
+      id: 'x4', label: 'Acteur relié à un cas d’utilisation', kind: 'qcm', tag: 'Lire un diagramme', make() {
+        const ds = pick(UCS), i = rnd(0, ds.pairs.length - 1), good = ds.pairs[i][1];
+        const pool = Array.from(new Set(ds.pairs.map(p => p[1]).concat(shuffle(ACTORS)))).filter(a => a !== good), opts = shuffle([good].concat(shuffle(pool).slice(0, 3)));
+        return { html: '<p>Quel acteur est relié au cas d’utilisation « <strong>' + ds.pairs[i][0] + '</strong> » ?</p>' + ucSvg(ds), options: opts, correct: opts.indexOf(good), sol: 'L’acteur relié par un trait à « ' + ds.pairs[i][0] + ' » est <b>' + good + '</b>.' };
+      }
+    },
+    {
+      id: 'x5', label: 'Relation include ou extend', kind: 'qcm', tag: 'Lire un diagramme', make() {
+        const ds = pick(UCS), base = ds.pairs[0][0], e = ds.ex.t, inc = ds.ex.type === 'include';
+        const good = inc ? 'Pour réaliser « ' + base + ' », le système réalise toujours « ' + e + ' »' : '« ' + e + ' » complète « ' + base + ' » seulement dans certaines conditions';
+        const bads = inc ? ['« ' + e + ' » est réalisé seulement dans certains cas, pour compléter « ' + base + ' »', '« ' + base + ' » est une variante particulière de « ' + e + ' »', '« ' + e + ' » est réalisé par un acteur et « ' + base + ' » par un autre']
+          : ['« ' + base + ' » réalise toujours « ' + e + ' » pour aboutir', '« ' + e + ' » est une variante particulière de « ' + base + ' »', '« ' + e + ' » doit être réalisé avant « ' + base + ' » dans tous les cas'];
+        const opts = shuffle([good].concat(bads));
+        return { html: '<p>Observe la relation entre « <strong>' + base + '</strong> » et « <strong>' + e + '</strong> ». Quelle phrase est exacte ?</p>' + ucSvg(ds), options: opts, correct: opts.indexOf(good), sol: inc ? 'La flèche pointillée « include » va du cas de base vers le cas inclus : le cas inclus est <b>toujours</b> réalisé avec le cas de base.' : 'La flèche pointillée « extend » part du cas qui étend vers le cas de base : l’extension est <b>facultative</b>, elle dépend de conditions.' };
+      }
+    },
+    {
+      id: 'x6', label: 'Compléter un diagramme des exigences', kind: 'class', tag: 'Compléter un diagramme', make() {
+        const ds = pick(REQS), rels = shuffle(RELS).slice(0, 3), bl = {};
+        rels.forEach((r, k) => bl[r] = k + 1);
+        const why = { satisfy: 'un <b>bloc</b> répond à l’exigence : « satisfy »', verify: 'un <b>essai</b> valide l’exigence : « verify »', refine: 'un <b>cas d’utilisation</b> précise l’exigence : « refine »', deriveReqt: 'une <b>exigence dérivée</b> détaille l’exigence source : « deriveReqt »' };
+        return complete('Dans ce diagramme des exigences, les <strong>types de relations</strong> repérés par un numéro sont masqués. Place chaque relation en regardant la nature de l’élément qui la porte.', reqSvg(ds, bl), rels.map(r => guil(r)), rels.map((r, k) => 'Repère ' + (k + 1) + ' : ' + why[r]).join('<br>'));
+      }
+    },
+    {
+      id: 'x8', label: 'Vérifier des mesures par rapport à une exigence', kind: 'num', tag: 'Lecture de mesures', make() {
+        const m = pick(MES), vals = [];
+        for (let i = 0; i < 6; i++) { const k = (Math.random() * 2 - 1) * m.sp; vals.push(Math.round((m.lim + k) * Math.pow(10, m.d)) / Math.pow(10, m.d)); }
+        if (!vals.some(v => v === m.lim) && Math.random() < .5) vals[rnd(0, 5)] = m.lim;
+        const ok = vals.filter(v => m.mode === 'max' ? v <= m.lim : v >= m.lim).length, sign = m.mode === 'max' ? '≤' : '≥';
+        return { html: '<p>Une exigence impose que ' + m.n + ' soit <strong>' + sign + ' ' + nf(m.lim) + ' ' + m.u + '</strong>. On a mesuré six exemplaires du produit : ' + vals.map(v => nf(v) + ' ' + m.u).join(' ; ') + '.</p><p>Combien de mesures <strong>respectent</strong> l’exigence ?</p>', unit: 'mesures', ans: ok, tol: .01,
+          sol: 'On garde les valeurs ' + sign + ' ' + nf(m.lim) + ' ' + m.u + ' (la valeur limite elle-même est acceptée) : <b>' + ok + '</b> mesure' + (ok > 1 ? 's' : '') + ' sur 6.', traps: [{ v: 6 - ok, msg: 'Tu as compté les mesures qui ne respectent pas l’exigence.' }] };
+      }
+    },
+    Q('q1', 'Rôle du diagramme des exigences', 'Que décrit le diagramme des exigences ?', 'Les besoins sous forme d’exigences, et leurs liens avec la solution', ['Les constituants matériels du produit et les liaisons entre eux', 'Le déroulement chronologique des échanges entre les acteurs', 'Les états successifs que traverse le système au cours du temps'], 'Le diagramme des exigences (req) traduit le besoin en exigences et les relie aux blocs, aux essais et aux cas d’utilisation.'),
+    Q('q2', 'Définition d’un acteur', 'Dans un diagramme de cas d’utilisation, un acteur est…', 'une entité extérieure au système qui interagit avec lui', ['un constituant interne du système, comme un moteur ou un capteur', 'une fonction que le système réalise pour rendre service à l’utilisateur', 'une exigence chiffrée que le système doit impérativement respecter'], 'Un acteur peut être une personne ou un autre système. Il se trouve en dehors du rectangle qui représente la frontière du système.'),
+    Q('q3', 'Symbole d’un cas d’utilisation', 'Que représente une ellipse dans un diagramme de cas d’utilisation ?', 'un service rendu par le système à un acteur', ['un acteur humain qui utilise le produit', 'un constituant matériel du système étudié', 'une exigence portant sur un critère chiffré'], 'Un cas d’utilisation est écrit avec un verbe à l’infinitif : « Ouvrir la porte », « Recharger la batterie ».'),
+    Q('q4', 'Frontière du système', 'Dans un diagramme de cas d’utilisation, le grand rectangle qui entoure les ellipses représente…', 'la frontière du système étudié', ['l’environnement extérieur au produit', 'le bloc regroupant tous les acteurs', 'la liste des exigences à vérifier'], 'Les cas d’utilisation sont à l’intérieur de la frontière, les acteurs à l’extérieur.'),
+    Q('q5', 'Exigence bien formulée', 'Quelle exigence est bien formulée, avec un critère et un niveau ?', 'Temps d’ouverture inférieur ou égal à 2 s', ['Ouverture de la porte la plus rapide possible', 'Serrure agréable à utiliser au quotidien', 'Fonctionnement fiable dans toutes les conditions'], 'Une exigence doit pouvoir être vérifiée : un critère (temps d’ouverture) et un niveau (≤ 2 s) la rendent mesurable.'),
+    Q('q6', 'Relation satisfy', 'Quelle relation indique qu’un bloc répond à une exigence ?', '« satisfy »', ['« verify »', '« refine »', '« include »'], 'Le bloc « satisfait » l’exigence. « verify » relie un essai, « refine » un cas d’utilisation, « include » n’existe qu’entre cas d’utilisation.'),
+    Q('q7', 'Relation verify', 'Quelle relation relie un essai à l’exigence qu’il permet de valider ?', '« verify »', ['« satisfy »', '« deriveReqt »', '« extend »'], 'Un cas de test « vérifie » l’exigence : on mesure le résultat et on le compare au niveau demandé.'),
+    Q('q8', 'Relation extend', 'La relation « extend » entre deux cas d’utilisation signifie que…', 'le cas étendu s’ajoute au cas de base seulement sous conditions', ['le cas de base déclenche systématiquement l’autre cas à chaque usage', 'les deux cas doivent obligatoirement être réalisés par le même acteur', 'le cas de base est entièrement remplacé par l’autre cas du diagramme'], '« include » : toujours réalisé. « extend » : facultatif, seulement si une condition est remplie.'),
+    Q('q9', 'Ingénierie système', 'L’ingénierie système a pour objectif de…', 'maîtriser la conception d’un système complexe à partir du besoin', ['fabriquer le produit le plus vite possible et en grande série', 'remplacer progressivement l’utilisateur par des automatismes', 'programmer uniquement la carte électronique du produit fini'], 'On part du besoin, on le traduit en exigences, puis on conçoit, on valide et on vérifie le système dans son ensemble.')
+  ];
+
+  /* ---------- 2. Diagrammes de définition de blocs (BDD) et de blocs internes (IBD) ---------- */
+  const BDDS = [
+    { parent: 'Outil électroportatif', sys: 'Visseuse sans fil', a: 'Batterie', b: 'Chargeur', al: 'est rechargée par' },
+    { parent: 'Dispositif de contrôle d’accès', sys: 'Serrure biométrique', a: 'Lecteur d’empreinte', b: 'Carte de commande', al: 'communique avec' },
+    { parent: 'Appareil audio', sys: 'Radio-réveil', a: 'Haut-parleur', b: 'Amplificateur', al: 'est piloté par' },
+    { parent: 'Fermeture motorisée', sys: 'Portail automatique', a: 'Motoréducteur', b: 'Variateur', al: 'est commandé par' }
+  ];
+  const BLK = guil('block');
+  /* trois liaisons d'un BDD : généralisation, composition, association */
+  function bddRelSvg(ds, bl) {
+    const tag = (k, cx, cy) => bl ? blank(cx, cy, bl[k], 44, 22) : '';
+    let s = L(105, 112, 105, 62, '', 'mT') + L(310, 135, 190, 135, '', 'mD') + L(395, 158, 395, 198, '');
+    s += blk(20, 12, 170, 50, ds.parent, BLK) + blk(20, 112, 170, 46, ds.sys, BLK) + blk(310, 112, 170, 46, ds.a, BLK) + blk(310, 198, 170, 46, ds.b, BLK);
+    s += T(366, 182, ds.al, 'st', 'end') + tag('gen', 105, 87) + tag('comp', 250, 135) + tag('assoc', 395, 178);
+    return svg(500, 254, 'Diagramme de définition de blocs : ' + ds.sys, s);
+  }
+  /* une seule liaison, à nommer */
+  function relSvg(type, ds) {
+    let s;
+    if (type === 'comp') s = blk(10, 24, 170, 50, ds.sys, BLK) + blk(320, 24, 170, 50, ds.a, BLK) + L(320, 49, 180, 49, '', 'mD');
+    else if (type === 'gen') s = blk(10, 24, 170, 50, ds.parent, BLK) + blk(320, 24, 170, 50, ds.sys, BLK) + L(320, 49, 180, 49, '', 'mT');
+    else s = blk(10, 24, 170, 50, ds.a, BLK) + blk(320, 24, 170, 50, ds.b, BLK) + L(180, 49, 320, 49, '') + lab(250, 49, ds.al);
+    return svg(500, 98, 'Liaison entre deux blocs', s);
+  }
+  const PARTS = [
+    { sys: 'Visseuse sans fil', parts: ['Batterie', 'Variateur', 'Moteur', 'Réducteur', 'Mandrin', 'Gâchette'], ext: 'Chargeur', parent: 'Outil électroportatif' },
+    { sys: 'Serrure biométrique', parts: ['Lecteur d’empreinte', 'Carte de commande', 'Gâche électrique', 'Pile', 'Boîtier'], ext: 'Administrateur', parent: 'Dispositif de contrôle d’accès' },
+    { sys: 'Portail automatique', parts: ['Motoréducteur', 'Carte de commande', 'Récepteur radio', 'Alimentation', 'Feu clignotant', 'Bras articulé'], ext: 'Télécommande', parent: 'Fermeture motorisée' },
+    { sys: 'Radio-réveil', parts: ['Afficheur', 'Récepteur radio', 'Haut-parleur', 'Alimentation', 'Carte électronique'], ext: 'Émetteur radio', parent: 'Appareil audio' }
+  ];
+  function bddPartsSvg(ds, parts, withExt, withPar) {
+    const k = parts.length, pw = Math.floor((480 - (k - 1) * 8) / k);
+    let s = blk(164, 10, 172, 58, ds.sys, BLK);
+    if (withExt) s += L(108, 39, 164, 39, '') + blk(8, 10, 100, 58, ds.ext, BLK);
+    if (withPar) s += L(336, 39, 380, 39, '', 'mT') + blk(380, 10, 112, 58, ds.parent, BLK);
+    parts.forEach((p, i) => {
+      const cx = 10 + i * (pw + 8) + pw / 2, sx = 190 + i * (120 / (k - 1));
+      s += L(cx, 140, sx, 68, '', 'mD') + blk(10 + i * (pw + 8), 140, pw, 50, p, BLK);
+    });
+    return svg(500, 202, 'Diagramme de définition de blocs : ' + ds.sys, s);
+  }
+
+  /* IBD : trois colonnes, deux lignes ; flux = énergie électrique (e), énergie mécanique (m) ou information (i) */
+  const FLUX = { e: 'Énergie électrique', m: 'Énergie mécanique', i: 'Information' };
+  const IBDS = [
+    { sys: 'Visseuse sans fil', n: ['Batterie', 'Variateur', 'Moteur', 'Gâchette', 'Réducteur'] },
+    { sys: 'Serrure biométrique', n: ['Pile', 'Carte de commande', 'Gâche électrique', 'Lecteur d’empreinte', 'Verrou'] },
+    { sys: 'Portail automatique', n: ['Alimentation 230 V', 'Carte de commande', 'Motoréducteur', 'Récepteur radio', 'Bras articulé'] },
+    { sys: 'Vélo électrique', n: ['Batterie', 'Contrôleur de puissance', 'Moteur-moyeu', 'Capteur de pédalage', 'Roue'] }
+  ];
+  /* nœuds : 0 (col 0, ligne 0) 1 (col 1, ligne 0) 2 (col 2, ligne 0) 3 (col 1, ligne 1) 4 (col 2, ligne 1) */
+  const POS = [[0, 0], [1, 0], [2, 0], [1, 1], [2, 1]];
+  const EDGES = [{ f: 0, t: 1, ty: 'e' }, { f: 1, t: 2, ty: 'e' }, { f: 3, t: 1, ty: 'i' }, { f: 2, t: 4, ty: 'm' }];
+  function ibdSvg(ds, mode, bl) { /* mode : 'blank' (repères), 'labels' (étiquettes) ou 'none' */
+    const X = [8, 195, 382], Y = [84, 190], NW = 110, NH = 46;
+    let s = R(4, 4, 492, 242, 'fr', 8) + T(14, 22, 'ibd [bloc] ' + ds.sys, 'hd', 'start');
+    ds.n.forEach((nm, i) => { s += blk(X[POS[i][0]], Y[POS[i][1]] - NH / 2, NW, NH, nm, ''); });
+    EDGES.forEach((e, k) => {
+      const a = POS[e.f], b = POS[e.t], cls = e.ty === 'i' ? 'inf' : 'en';
+      let x1, y1, x2, y2;
+      if (a[1] === b[1]) { x1 = X[a[0]] + NW; y1 = Y[a[1]]; x2 = X[b[0]]; y2 = y1; }
+      else { x1 = X[a[0]] + NW / 2; x2 = x1; y1 = Y[a[1]] + (b[1] > a[1] ? NH / 2 : -NH / 2); y2 = Y[b[1]] + (b[1] > a[1] ? -NH / 2 : NH / 2); }
+      const dx = Math.sign(x2 - x1), dy = Math.sign(y2 - y1);
+      s += L(x1, y1, x2 - 5 * dx, y2 - 5 * dy, cls, 'mA');
+      s += '<rect x="' + (x1 - 4) + '" y="' + (y1 - 4) + '" width="8" height="8" class="pt"/><rect x="' + (x2 - 4) + '" y="' + (y2 - 4) + '" width="8" height="8" class="pt"/>';
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+      if (mode === 'blank' && bl && bl[k]) s += blank(mx, my, bl[k], 44, 22);
+      else if (mode !== 'none') {
+        const ls = wrap(FLUX[e.ty], 11);
+        if (y1 === y2) ls.forEach((t, j) => { s += T(mx, y1 - 9 - (ls.length - 1 - j) * 13, t, 'st'); });
+        else ls.forEach((t, j) => { s += T(mx + 8, my - (ls.length - 1) * 6.5 + j * 13 + 4, t, 'st', 'start'); });
+      }
+    });
+    return svg(500, 250, 'Diagramme de blocs internes : ' + ds.sys, s);
+  }
+  const NODE_ID = (ds, i) => ds.n[i];
+
+  const DIAGQ = {
+    'Diagramme des exigences': ['Quel niveau de performance le produit doit-il atteindre ?', 'Quel essai permet de valider le temps d’ouverture ?'],
+    'Diagramme des cas d’utilisation': ['Qui utilise le système, et pour quoi faire ?', 'Quels services le système rend-il à son environnement ?'],
+    'BDD (définition de blocs)': ['De quels blocs le système est-il composé ?', 'Quel bloc est un cas particulier d’un autre bloc ?'],
+    'IBD (blocs internes)': ['Quels flux circulent entre les blocs à l’intérieur du système ?', 'Par quel port le capteur est-il relié à la carte de commande ?']
+  };
+  const VIEWS = {
+    'Point de vue structurel': ['Diagramme de définition de blocs (BDD)', 'Diagramme de blocs internes (IBD)'],
+    'Point de vue fonctionnel': ['Diagramme de cas d’utilisation'],
+    'Point de vue comportemental': ['Diagramme d’états', 'Diagramme de séquence']
+  };
+
+  const str = [
+    {
+      id: 's1', label: 'Quel diagramme répond à quelle question ?', kind: 'class', make() {
+        const keys = shuffle(Object.keys(DIAGQ)).slice(0, 3), map = {}; keys.forEach(k => map[k] = DIAGQ[k]);
+        return classFrom(map, 2, 'Pour chaque question, indique le <strong>diagramme SysML</strong> qui permet d’y répondre.')();
+      }
+    },
+    {
+      id: 's2', label: 'Compléter un BDD : relations entre blocs', kind: 'class', tag: 'Compléter un diagramme', make() {
+        const ds = pick(BDDS), order = shuffle(['gen', 'comp', 'assoc']), bl = {};
+        order.forEach((k, i) => bl[k] = i + 1);
+        const nom = { gen: 'Généralisation', comp: 'Composition', assoc: 'Association' };
+        const why = { gen: '« ' + ds.sys + ' » est un cas particulier de « ' + ds.parent + ' » : triangle vide côté bloc général', comp: '« ' + ds.a + ' » est une partie de « ' + ds.sys + ' » : losange plein côté bloc composé', assoc: '« ' + ds.a + ' » et « ' + ds.b + ' » sont simplement liés : trait simple' };
+        return complete('Dans ce diagramme de définition de blocs, les <strong>trois liaisons</strong> repérées par un numéro sont masquées. Place chaque type de relation à la bonne place en lisant le sens des blocs.', bddRelSvg(ds, bl), order.map(k => nom[k]), order.map((k, i) => 'Repère ' + (i + 1) + ' : ' + why[k]).join('<br>'));
+      }
+    },
+    {
+      id: 's3', label: 'Compléter un IBD : nature des flux', kind: 'class', tag: 'Compléter un diagramme', make() {
+        const ds = pick(IBDS), e = rnd(0, 1), idx = shuffle([e, 2, 3]), bl = {};
+        idx.forEach((k, i) => bl[k] = i + 1);
+        return complete('Dans ce diagramme de blocs internes de « ' + ds.sys + ' », la <strong>nature du flux</strong> est masquée sur trois liaisons. Place chaque flux à la bonne place.', ibdSvg(ds, 'blank', bl), idx.map(k => FLUX[EDGES[k].ty]),
+          'Un flux d’information (pointillés) sort d’un capteur ou d’une commande ; l’énergie électrique alimente puis distribue ; l’énergie mécanique sort du moteur.');
+      }
+    },
+    {
+      id: 's4', label: 'Compter les parties d’un système sur un BDD', kind: 'num', tag: 'Lire un diagramme', make() {
+        const ds = pick(PARTS), k = rnd(3, Math.min(5, ds.parts.length)), parts = shuffle(ds.parts).slice(0, k), ext = Math.random() < .7, par = Math.random() < .6;
+        return { html: '<p>Combien de blocs sont des <strong>parties</strong> de « ' + ds.sys + ' », c’est-à-dire reliés à lui par une <strong>composition</strong> (losange plein) ?</p>' + bddPartsSvg(ds, parts, ext, par), unit: 'blocs', ans: k, tol: .01,
+          sol: 'On compte les blocs reliés au système par un losange plein : <b>' + k + '</b>.' + (ext || par ? ' Les autres blocs sont reliés par une association (trait simple) ou une généralisation (triangle).' : ''),
+          traps: (ext || par) ? [{ v: k + (ext ? 1 : 0) + (par ? 1 : 0), msg: 'Tu as compté tous les blocs voisins. Seuls ceux reliés par un losange plein sont des parties du système.' }] : [] };
+      }
+    },
+    {
+      id: 's7', label: 'Diagrammes et points de vue', kind: 'class', make: classFrom(VIEWS, 2, 'Classe chaque diagramme dans le <strong>point de vue</strong> auquel il appartient.')
+    },
+    {
+      id: 's5', label: 'Nommer une relation entre blocs', kind: 'qcm', tag: 'Lire un diagramme', make() {
+        const ds = pick(BDDS), type = pick(['comp', 'gen', 'assoc']), nom = { comp: 'Composition', gen: 'Généralisation', assoc: 'Association' };
+        const who = type === 'comp' ? ['« ' + ds.a + ' »', '« ' + ds.sys + ' »'] : type === 'gen' ? ['« ' + ds.sys + ' »', '« ' + ds.parent + ' »'] : ['« ' + ds.a + ' »', '« ' + ds.b + ' »'];
+        const opts = shuffle(['Composition', 'Généralisation', 'Association', 'Dépendance']);
+        const sol = { comp: 'Le losange plein est placé du côté du tout : « ' + ds.a + ' » est une <b>partie</b> de « ' + ds.sys + ' » (composition).', gen: 'Le triangle vide pointe vers le bloc général : « ' + ds.sys + ' » est un <b>cas particulier</b> de « ' + ds.parent + ' » (généralisation).', assoc: 'Un trait simple, sans losange ni triangle, indique une <b>association</b> : les deux blocs sont liés.' };
+        return { html: '<p>Quel est le nom de la relation entre ' + who[0] + ' et ' + who[1] + ' ?</p>' + relSvg(type, ds), options: opts, correct: opts.indexOf(nom[type]), sol: sol[type] };
+      }
+    },
+    {
+      id: 's6', label: 'Nature du flux entre deux blocs d’un IBD', kind: 'qcm', tag: 'Lire un diagramme', make() {
+        const ds = pick(IBDS), e = pick(EDGES), opts = shuffle(['Énergie électrique', 'Énergie mécanique', 'Information', 'Matière (pièce, fluide)']);
+        const sol = { e: 'Un bloc d’alimentation ou de distribution envoie de l’<b>énergie électrique</b> au bloc suivant.', m: 'Le moteur fournit de l’<b>énergie mécanique</b> de rotation : la liaison est dessinée en trait plein épais.', i: 'Un capteur ou une commande transmet une <b>information</b> (flèche pointillée).' };
+        return { html: '<p>Sur cet IBD, quelle est la nature du flux qui circule de « <strong>' + ds.n[e.f] + '</strong> » vers « <strong>' + ds.n[e.t] + '</strong> » ?</p>' + ibdSvg(ds, 'none'), options: opts, correct: opts.indexOf(FLUX[e.ty]), sol: sol[e.ty] };
+      }
+    },
+    Q('sq1', 'Rôle du BDD', 'Que décrit un diagramme de définition de blocs (BDD) ?', 'La structure du système : ses blocs et les relations entre eux', ['Les échanges de flux entre les parties internes d’un seul bloc', 'Les services que le système rend à ses différents acteurs', 'Les exigences chiffrées que doit respecter le produit conçu'], 'Le BDD donne la vue d’ensemble de l’architecture : blocs, composition, généralisation. Les flux se voient sur l’IBD.'),
+    Q('sq2', 'Rôle de l’IBD', 'Un diagramme de blocs internes (IBD) permet de représenter…', 'les liaisons et les flux entre les parties d’un bloc', ['les états successifs que traverse un bloc au cours du temps', 'les exigences allouées à chacun des blocs du système', 'les acteurs qui entourent le système et ses cas d’utilisation'], 'L’IBD détaille l’intérieur d’un bloc du BDD : parties, ports et flux qui les relient.'),
+    Q('sq3', 'Notion de port', 'Dans un diagramme de blocs internes, un port est…', 'un point d’interaction par lequel un bloc échange un flux', ['une exigence qui porte sur l’entrée de l’énergie dans le système', 'un acteur extérieur qui se connecte au système étudié', 'une pièce mécanique qui assure la fixation du bloc sur son support'], 'Le port (petit carré sur le bord du bloc) indique où l’énergie, la matière ou l’information entre ou sort.'),
+    Q('sq4', 'Losange plein', 'Le losange plein à l’extrémité d’une liaison de BDD indique…', 'que le bloc est composé de l’autre : c’est l’une de ses parties', ['que les deux blocs sont simplement associés, sans lien de parties', 'que l’un des blocs est un cas particulier de l’autre bloc', 'que l’un des blocs dépend seulement de façon provisoire de l’autre'], 'Composition : le losange est du côté du bloc qui contient l’autre.'),
+    Q('sq5', 'Triangle vide', 'Le triangle vide à l’extrémité d’une liaison de BDD indique…', 'une généralisation : le bloc source est un cas particulier du bloc visé', ['une composition : le bloc visé est une partie du bloc source, qui le contient', 'un flux d’énergie circulant du bloc source vers le bloc visé', 'une exigence qui est satisfaite par le bloc visé de la liaison'], 'Généralisation : le triangle pointe vers le bloc le plus général.'),
+    Q('sq6', 'Point de vue structurel', 'Quel diagramme appartient au point de vue structurel ?', 'Le diagramme de blocs internes (IBD)', ['Le diagramme de séquence des messages', 'Le diagramme d’états et de transitions', 'Le diagramme de cas d’utilisation des acteurs'], 'Structurel : comment le système est construit (BDD, IBD). Comportemental : comment il évolue (états, séquence).'),
+    Q('sq7', 'Contenu d’un flux', 'Sur un IBD, que peut transporter un flux entre deux blocs ?', 'De l’énergie, de la matière ou de l’information', ['Uniquement une grandeur électrique, comme une tension', 'Seulement des exigences à vérifier par des essais', 'Exclusivement des données numériques échangées par la carte'], 'Le flux peut être de l’énergie (électrique, mécanique…), de la matière (pièce, fluide) ou de l’information (signal, ordre).'),
+    Q('sq8', 'Choisir le bon diagramme', 'Pour connaître les capteurs et les actionneurs qui composent un produit, on consulte plutôt…', 'le BDD, qui liste les blocs constituants', ['le diagramme de séquence, qui montre le temps', 'le diagramme des exigences, qui fixe les critères', 'le diagramme de cas d’utilisation, qui montre les acteurs'], 'Le BDD donne l’architecture : les constituants et leurs liens de composition.')
+  ];
+
+  /* ---------- 3. Chaînes d'énergie et d'information ---------- */
+  const FN = ['Alimenter', 'Distribuer', 'Convertir', 'Transmettre', 'Acquérir', 'Traiter', 'Communiquer'];
+  const ROLE = ['il fournit l’énergie à la chaîne.', 'il dose l’énergie envoyée aux actionneurs.', 'il convertit l’énergie électrique en énergie mécanique.', 'il adapte et transmet le mouvement jusqu’à l’action.'];
+  const CH = [
+    { sys: 'Visseuse sans fil', c: ['Batterie Li-ion', 'Variateur', 'Moteur à courant continu', 'Réducteur planétaire', 'Gâchette', 'Carte électronique', 'Voyant LED'] },
+    { sys: 'Portail automatique', c: ['Réseau 230 V', 'Relais', 'Motoréducteur', 'Bras articulé', 'Récepteur radio', 'Carte de commande', 'Feu clignotant'] },
+    { sys: 'Vélo électrique', c: ['Batterie', 'Contrôleur de puissance', 'Moteur-moyeu', 'Réducteur intégré', 'Capteur de pédalage', 'Calculateur', 'Écran de bord'] }
+  ];
+  /* emplacements 0 à 3 : chaîne d'énergie ; 4 à 6 : chaîne d'information */
+  function chainSvg(ds, o) {
+    o = o || {};
+    const W = 106, H = 62, pos = i => i < 4 ? [5 + i * 128, 140] : [5 + (i - 4) * 128, 26];
+    let s = T(6, 17, 'CHAÎNE D’INFORMATION', 'hd', 'start') + T(6, 133, 'CHAÎNE D’ÉNERGIE', 'hd', 'start');
+    for (let i = 0; i < 3; i++) s += L(pos(i)[0] + W, 171, pos(i + 1)[0], 171, 'en', 'mA');
+    for (let j = 4; j < 6; j++) s += L(pos(j)[0] + W, 57, pos(j + 1)[0], 57, 'inf', 'mA');
+    s += L(186, 88, 186, 140, 'inf', 'mA') + T(194, 118, 'ordres', 'st', 'start');
+    for (let i = 0; i < 7; i++) {
+      const [x, y] = pos(i), cx = x + W / 2, comp = wrap(ds.c[i], 15);
+      s += R(x, y, W, H, 'bk');
+      if (!o.nohead) {
+        s += L(x, y + 23, x + W, y + 23, 'sep');
+        s += o.bh && o.bh[i] ? blank(cx, y + 12, o.bh[i], 68, 20) : T(cx, y + 16, FN[i], 'fn');
+        s += o.bc && o.bc[i] ? blank(cx, y + 43, o.bc[i], 84, 28) : lines(cx, y + 43, comp.map(t => [t, 'tx']));
+      } else s += lines(cx, y + 31, comp.map(t => [t, 'tx']));
+    }
+    return svg(500, 214, 'Chaîne d’énergie et d’information : ' + ds.sys, s);
+  }
+
+  const FONC = {
+    'Alimenter': ['Panneaux photovoltaïques', 'Batterie Li-ion', 'Pile', 'Réseau électrique 230 V', 'Réservoir de carburant'],
+    'Distribuer': ['Régulateur MPPT', 'Variateur de vitesse', 'Hacheur', 'Contacteur', 'Relais'],
+    'Convertir': ['Moteur à courant continu', 'Moteur pas à pas', 'Moteur brushless', 'Vérin pneumatique'],
+    'Transmettre': ['Réducteur à engrenages', 'Courroie crantée', 'Hélices', 'Excentrique', 'Pignon-crémaillère', 'Vis-écrou']
+  };
+  const INFO = ['Codeur incrémental', 'Carte microcontrôleur', 'Capteur de distance', 'Récepteur radio', 'Écran afficheur', 'Capteur de température', 'Voyant LED', 'Bouton poussoir'];
+  const ENER = ['Batterie Li-ion', 'Variateur de vitesse', 'Moteur à courant continu', 'Réducteur à engrenages', 'Relais', 'Réseau électrique 230 V', 'Vérin pneumatique', 'Courroie crantée', 'Hélices', 'Panneaux photovoltaïques'];
+  const ATC = {
+    'Acquérir': ['Capteur de distance', 'Codeur incrémental', 'Bouton poussoir', 'Thermistance'],
+    'Traiter': ['Carte microcontrôleur', 'Automate programmable', 'Calculateur'],
+    'Communiquer': ['Écran afficheur', 'Voyant', 'Module radio', 'Buzzer']
+  };
+  const chn = [
+    { id: 'n1', label: 'Fonctions de la chaîne d’énergie', kind: 'class', make: classFrom(FONC, 2, 'Classe chaque constituant dans la <strong>fonction</strong> de la chaîne d’énergie qu’il assure.') },
+    { id: 'n2', label: 'Acquérir, traiter, communiquer', kind: 'class', make: classFrom(ATC, 2, 'Dans la <strong>chaîne d’information</strong>, classe chaque constituant selon sa fonction.') },
+    {
+      id: 'n3', label: 'Chaîne d’énergie ou d’information ?', kind: 'class', make() {
+        const cats = ['Chaîne d’information', 'Chaîne d’énergie'], items = shuffle(INFO).slice(0, 3).map(t => ({ t, c: 0 })).concat(shuffle(ENER).slice(0, 3).map(t => ({ t, c: 1 })));
+        return { html: '<p>Classe chaque constituant dans la <strong>chaîne</strong> à laquelle il appartient.</p>', cats, items: shuffle(items), sol: cats.map((c, k) => '<b>' + c + '</b> : ' + items.filter(i => i.c === k).map(i => i.t).join(', ')).join('<br>') };
+      }
+    },
+    {
+      id: 'n4', label: 'Compléter une chaîne fonctionnelle', kind: 'class', tag: 'Compléter un diagramme', make() {
+        const ds = pick(CH), slots = shuffle([0, 1, 2, 3, 4, 5, 6]).slice(0, 4), byFn = Math.random() < .5, m = {};
+        slots.forEach((sl, k) => m[sl] = k + 1);
+        const answers = slots.map(sl => byFn ? FN[sl] : ds.c[sl]);
+        const intro = byFn ? 'Sur cette chaîne fonctionnelle de « ' + ds.sys + ' », quatre <strong>fonctions</strong> sont masquées. Place chaque fonction en lisant le composant qui la réalise.' : 'Sur cette chaîne fonctionnelle de « ' + ds.sys + ' », quatre <strong>composants</strong> sont masqués. Place chaque composant en lisant la fonction qu’il doit réaliser.';
+        return complete(intro, chainSvg(ds, byFn ? { bh: m } : { bc: m }), answers, 'Énergie : Alimenter → Distribuer → Convertir → Transmettre. Information : Acquérir → Traiter → Communiquer, avec des ordres vers la chaîne d’énergie.');
+      }
+    },
+    {
+      id: 'n5', label: 'Compter les composants d’une chaîne', kind: 'num', tag: 'Dénombrement', make() {
+        const k = rnd(2, 4), inf = shuffle(INFO).slice(0, k), en = shuffle(ENER).slice(0, 7 - k), all = shuffle(inf.concat(en));
+        return { html: '<p>Voici sept constituants d’un même système : ' + all.join(' ; ') + '.</p><p>Combien appartiennent à la <strong>chaîne d’information</strong> ?</p>', unit: 'constituants', ans: k, tol: .01,
+          sol: 'Chaîne d’information (acquérir, traiter, communiquer) : ' + inf.join(', ') + ' soit <b>' + k + '</b>. Les autres relèvent de la chaîne d’énergie.', traps: [{ v: 7 - k, msg: 'Tu as compté les constituants de la chaîne d’énergie.' }] };
+      }
+    },
+    {
+      id: 'n6', label: 'Fonction d’un composant sur le schéma', kind: 'qcm', tag: 'Lire un diagramme', make() {
+        const ds = pick(CH), sl = rnd(0, 3), good = FN[sl], opts = shuffle(FN.slice(0, 4));
+        return { html: '<p>Les fonctions ne sont pas indiquées sur ce schéma de « ' + ds.sys + ' ». Quelle fonction de la <strong>chaîne d’énergie</strong> assure « <strong>' + ds.c[sl] + '</strong> » ?</p>' + chainSvg(ds, { nohead: true }), options: opts, correct: opts.indexOf(good), sol: '« ' + ds.c[sl] + ' » assure la fonction <b>' + good + '</b> : ' + ROLE[sl] };
+      }
+    },
+    Q('cq1', 'Ordre des fonctions', 'Quel est l’ordre des fonctions de la chaîne d’énergie, de la source vers l’action ?', 'Alimenter → Distribuer → Convertir → Transmettre', ['Distribuer → Alimenter → Transmettre → Convertir', 'Convertir → Alimenter → Distribuer → Transmettre', 'Alimenter → Convertir → Distribuer → Transmettre'], 'L’énergie est d’abord fournie, puis dosée, convertie en mouvement et enfin transmise à l’effecteur.'),
+    Q('cq2', 'Rôle d’un variateur', 'Un variateur de vitesse appartient à quelle fonction de la chaîne d’énergie ?', 'Distribuer', ['Alimenter', 'Convertir', 'Transmettre'], 'Il dose l’énergie envoyée au moteur : il distribue.'),
+    Q('cq3', 'Rôle d’un réducteur', 'Un réducteur à engrenages assure quelle fonction ?', 'Transmettre le mouvement en adaptant vitesse et couple', ['Convertir l’énergie électrique en énergie mécanique de rotation', 'Alimenter le moteur en énergie électrique à partir du réseau', 'Acquérir la position angulaire de l’arbre de sortie du moteur'], 'Il reçoit une rotation et en restitue une autre : c’est une fonction de transmission.'),
+    Q('cq4', 'Rôle d’un moteur', 'Quelle fonction assure un moteur électrique dans la chaîne d’énergie ?', 'Convertir l’énergie électrique en énergie mécanique', ['Distribuer l’énergie électrique vers les actionneurs', 'Transmettre le mouvement en réduisant la vitesse', 'Acquérir la vitesse de rotation de l’arbre'], 'Le moteur est le convertisseur de la chaîne : électrique → mécanique (avec un peu de chaleur).'),
+    Q('cq5', 'Fonctions de la chaîne d’information', 'Quelles sont les trois fonctions de la chaîne d’information ?', 'Acquérir, traiter, communiquer', ['Alimenter, distribuer, convertir', 'Convertir, transmettre, agir', 'Mesurer, amplifier, stocker'], 'Les capteurs acquièrent, le calculateur traite, les interfaces communiquent.'),
+    Q('cq6', 'Rôle d’un capteur', 'Un capteur de distance assure quelle fonction ?', 'Acquérir une information sur l’environnement', ['Traiter les données reçues par la carte de commande', 'Convertir l’énergie électrique en mouvement de rotation', 'Communiquer un résultat de mesure à l’utilisateur'], 'Un capteur transforme une grandeur physique en signal : il acquiert.'),
+    Q('cq7', 'Lien entre les deux chaînes', 'Que transmet la chaîne d’information à la chaîne d’énergie ?', 'Des ordres de commande (consignes)', ['De l’énergie mécanique pour l’action', 'Les pertes thermiques des composants', 'La source d’énergie primaire du produit'], 'La chaîne d’information traite les données puis commande la distribution de l’énergie (ordres).'),
+    Q('cq8', 'Rôle d’une batterie', 'Une batterie appartient à quelle fonction de la chaîne d’énergie ?', 'Alimenter', ['Distribuer', 'Convertir', 'Communiquer'], 'C’est la source d’énergie : elle alimente la chaîne.'),
+    Q('cq9', 'Deux chaînes, deux rôles', 'Quelle est la différence entre la chaîne d’énergie et la chaîne d’information ?', 'La première apporte la puissance à l’action, la seconde pilote cette action', ['La première traite les données du produit, la seconde fournit toute la puissance', 'Elles jouent exactement le même rôle dans le produit, sous deux noms différents', 'La seconde est toujours placée avant la source d’énergie dans le produit'], 'Énergie : alimenter, distribuer, convertir, transmettre. Information : acquérir, traiter, communiquer.')
+  ];
+
+  /* ---------- Notions ---------- */
+  const NOTIONS = [
+    {
+      id: 'exi', name: 'Exigences et cas d’utilisation', sub: 'Besoin, exigences vérifiables, acteurs, cas d’utilisation, include et extend', gens: exi,
+      rappel: [
+        { t: 'Du besoin aux exigences', p: ['L’<b>ingénierie système</b> part du besoin de l’utilisateur pour concevoir, valider et vérifier un système complexe. Le besoin est traduit en <b>exigences</b> vérifiables : chacune porte un <b>critère</b> et un <b>niveau</b>, par exemple « temps d’ouverture ≤ 2 s ».'] },
+        { t: 'Diagramme des exigences (req)', p: ['Une exigence peut être détaillée en exigences dérivées, satisfaite par un bloc, vérifiée par un essai et précisée par un cas d’utilisation.', reqSvg(REQS[0], null)], tbl: [['Relation', 'Elle part de…', 'Elle signifie que…'], ['« satisfy »', 'un bloc', 'le bloc répond à l’exigence'], ['« verify »', 'un essai', 'l’essai valide l’exigence'], ['« refine »', 'un cas d’utilisation', 'le cas précise l’exigence'], ['« deriveReqt »', 'une exigence dérivée', 'elle détaille l’exigence source']] },
+        { t: 'Diagramme des cas d’utilisation (uc)', p: ['Les <b>acteurs</b> (personnes ou systèmes) sont <b>à l’extérieur</b> de la frontière du système. Les <b>cas d’utilisation</b> (ellipses, verbe à l’infinitif) sont les services rendus. « include » : le cas inclus est toujours réalisé ; « extend » : le cas étendu est facultatif, sous condition.', ucSvg(UCS[0])] }
+      ]
+    },
+    {
+      id: 'str', name: 'BDD et IBD', sub: 'Blocs, composition, généralisation, ports, flux et points de vue', gens: str,
+      rappel: [
+        { t: 'BDD : la structure du système', p: ['Un <b>bloc</b> représente un constituant ou un sous-système. Le <b>BDD</b> (diagramme de définition de blocs) montre les blocs et leurs relations.', bddRelSvg(BDDS[0], null)], tbl: [['Symbole', 'Relation', 'Se lit'], ['Losange plein', 'Composition', 'le bloc est une partie de l’autre'], ['Triangle vide', 'Généralisation', 'le bloc est un cas particulier de l’autre'], ['Trait simple', 'Association', 'les deux blocs sont liés']] },
+        { t: 'IBD : l’intérieur d’un bloc', p: ['Un <b>IBD</b> (diagramme de blocs internes) montre les parties d’un bloc, leurs <b>ports</b> (petits carrés) et les <b>flux</b> qui circulent : énergie, matière, information.', ibdSvg(IBDS[0], 'labels')] },
+        { t: 'Les points de vue', tbl: [['Point de vue', 'Diagrammes'], ['Structurel', 'BDD, IBD'], ['Fonctionnel', 'Cas d’utilisation'], ['Comportemental', 'États, séquence']] }
+      ]
+    },
+    {
+      id: 'chn', name: 'Chaînes d’énergie et d’information', sub: 'Alimenter, distribuer, convertir, transmettre ; acquérir, traiter, communiquer', gens: chn,
+      rappel: [
+        { t: 'Chaîne d’énergie', f: ['Alimenter → Distribuer → Convertir → Transmettre'], p: ['<b>Alimenter</b> : batterie, réseau, panneaux. <b>Distribuer</b> : variateur, relais, hacheur. <b>Convertir</b> : moteur, vérin. <b>Transmettre</b> : réducteur, courroie, hélice.'] },
+        { t: 'Chaîne d’information', f: ['Acquérir → Traiter → Communiquer'], p: ['<b>Acquérir</b> : capteurs, boutons. <b>Traiter</b> : carte électronique, automate. <b>Communiquer</b> : afficheur, voyant, liaison radio.'] },
+        { t: 'Les deux chaînes ensemble', p: ['La chaîne d’information envoie des <b>ordres</b> à la chaîne d’énergie. L’énergie est dessinée en trait plein, l’information en pointillés.', chainSvg(CH[0], {})] }
+      ]
+    }
+  ];
+
+  root.BANK = { NOTIONS, pick, shuffle, rnd, nf };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+(function () {
+  'use strict';
+  const B = window.BANK, NOTIONS = B.NOTIONS, nf = B.nf, shuffle = B.shuffle, pick = B.pick;
+  const $app = document.getElementById('app');
+  const NID = {}; NOTIONS.forEach(n => NID[n.id] = n);
+  const SHORT = { exi: 'Exigences / UC', str: 'BDD / IBD', chn: 'Chaînes' };
+  const GEN = {}; NOTIONS.forEach(n => n.gens.forEach(g => GEN[n.id + '.' + g.id] = { n, g }));
+  let NOM = '';
+  try { NOM = localStorage.getItem('si-1re-s1-nom') || ''; } catch (e) { /* ignoré */ }
+  const dateFr = () => { const d = new Date(); return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) + ' à ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  /* ---------- état persistant ---------- */
+  let ME = { id: null, name: '' }, DB = null, USER = null, ADMIN = false, BOOTED = false, SYNC = 'local', MODE = 'claude';
+  let STATE = blank(), ALL = [], NAMES = {};
+  function blank() { return { v: 1, updated: 0, notions: {}, errors: {} }; }
+  const LSK = () => 'si-1re-s1-fiche:' + (ME.id || 'anon');
+  function loadLocal() { try { const s = localStorage.getItem(LSK()); if (s) { const o = JSON.parse(s); if (o && o.v === 1) return o; } } catch (e) { /* stockage indisponible */ } return blank(); }
+  function saveLocal() { try { localStorage.setItem(LSK(), JSON.stringify(STATE)); } catch (e) { /* ignoré */ } }
+  const ns = id => STATE.notions[id] || (STATE.notions[id] = { h: '', n: 0, ok: 0, series: 0, last: null, best: 0 });
+  function mastery(st) { if (!st || !st.h) return null; let k = 0; for (const c of st.h) if (c === '1') k++; return k / st.h.length; }
+  function status(st) {
+    const m = mastery(st);
+    if (m == null) return { k: 'none', t: 'Pas commencé', c: '' };
+    if (st.h.length < 4) return { k: 'start', t: 'Démarrage', c: '' };
+    if (m >= .8 && st.h.length >= 6) return { k: 'good', t: 'Acquis', c: 'good' };
+    if (m >= .5) return { k: 'mid', t: 'En progrès', c: 'warn' };
+    return { k: 'low', t: 'À revoir', c: 'bad' };
+  }
+  function record(q, ok) {
+    const s = ns(q.nid); s.h = (s.h + (ok ? '1' : '0')).slice(-20); s.n++; if (ok) s.ok++;
+    const e = STATE.errors[q.gid] || (STATE.errors[q.gid] = [0, 0]); e[0]++; if (!ok) e[1]++;
+    persist();
+  }
+
+  /* ---------- Moodle / SCORM 1.2 (actif seulement si la page est lancée depuis un LMS) ---------- */
+  const LMS = (function () {
+    let api = null, t0 = Date.now(), closed = false;
+    function find(w) { for (let i = 0; w && i < 12; i++) { try { if (w.API) return w.API; } catch (e) { /* cadre d'un autre domaine */ } if (w === w.parent) break; w = w.parent; } return null; }
+    const get = k => { try { return String(api.LMSGetValue(k) || ''); } catch (e) { return ''; } };
+    const set = (k, v) => { try { api.LMSSetValue(k, String(v)); } catch (e) { /* ignoré */ } };
+    function init() {
+      api = find(window);
+      if (!api) { try { api = find(window.top); } catch (e) { api = null; } }
+      if (!api && window.opener) { try { api = find(window.opener); } catch (e) { api = null; } }
+      if (!api) return false;
+      try { if (String(api.LMSInitialize('')) === 'false') { api = null; return false; } } catch (e) { api = null; return false; }
+      if (/^(not attempted)?$/.test(get('cmi.core.lesson_status'))) set('cmi.core.lesson_status', 'incomplete');
+      return true;
+    }
+    function pack() {
+      const n = {}; Object.keys(STATE.notions).forEach(k => { const s = STATE.notions[k]; n[k] = [s.h, s.n, s.ok, s.series || 0, s.last == null ? -1 : s.last, s.best || 0]; });
+      let e = STATE.errors, s = JSON.stringify({ v: 1, u: STATE.updated, n, e });
+      if (s.length > 3800) { e = {}; Object.keys(STATE.errors).forEach(k => { if (STATE.errors[k][1] > 0) e[k] = STATE.errors[k]; }); s = JSON.stringify({ v: 1, u: STATE.updated, n, e }); }
+      if (s.length > 3800) s = JSON.stringify({ v: 1, u: STATE.updated, n, e: {} });
+      return s;
+    }
+    function unpack(s) {
+      try { const o = JSON.parse(s); if (!o || o.v !== 1) return null; const st = blank(); st.updated = o.u || 0; Object.keys(o.n || {}).forEach(k => { const a = o.n[k]; st.notions[k] = { h: a[0], n: a[1], ok: a[2], series: a[3], last: a[4] < 0 ? null : a[4], best: a[5] }; }); st.errors = o.e || {}; return st; } catch (e) { return null; }
+    }
+    function save() {
+      if (!api || closed) return;
+      set('cmi.suspend_data', pack());
+      const ms = NOTIONS.map(n => mastery(STATE.notions[n.id])), overall = Math.round(ms.reduce((s, m) => s + (m == null ? 0 : m), 0) / ms.length * 100);
+      set('cmi.core.score.min', 0); set('cmi.core.score.max', 100); set('cmi.core.score.raw', overall);
+      set('cmi.core.lesson_status', NOTIONS.every(n => ((STATE.notions[n.id] || {}).series || 0) > 0) ? 'completed' : 'incomplete');
+      NOTIONS.forEach((n, i) => {
+        const m = ms[i], k = status(STATE.notions[n.id]).k, p = 'cmi.objectives.' + i + '.';
+        set(p + 'id', n.id); set(p + 'score.raw', m == null ? 0 : Math.round(m * 100)); set(p + 'status', k === 'good' ? 'passed' : k === 'low' ? 'failed' : k === 'none' ? 'not attempted' : 'incomplete');
+      });
+      try { api.LMSCommit(''); } catch (e) { /* ignoré */ }
+    }
+    function finish() {
+      if (!api || closed) return; save(); closed = true;
+      const s = Math.round((Date.now() - t0) / 1000), p = x => (x < 10 ? '0' : '') + x;
+      set('cmi.core.session_time', p(Math.floor(s / 3600)) + ':' + p(Math.floor(s % 3600 / 60)) + ':' + p(s % 60)); set('cmi.core.exit', 'suspend');
+      try { api.LMSCommit(''); api.LMSFinish(''); } catch (e) { /* ignoré */ }
+    }
+    function name() { const n = get('cmi.core.student_name'); if (n.indexOf(',') > 0) { const a = n.split(','); return (a.slice(1).join(',').trim() + ' ' + a[0].trim()).trim(); } return n.trim(); }
+    return { init, save, finish, name, id: () => get('cmi.core.student_id'), load: () => unpack(get('cmi.suspend_data')), ok: () => !!api };
+  })();
+  let lmsT = null;
+
+  /* synchronisation avec la base partagée (une écriture à la fois) */
+  let saveT = null, saving = false, dirty = false, syncOff = false;
+  function persist() { STATE.updated = Date.now(); saveLocal(); if (MODE === 'scorm') { clearTimeout(lmsT); lmsT = setTimeout(LMS.save, 800); } dirty = true; if (DB && ME.id && !syncOff) { clearTimeout(saveT); saveT = setTimeout(flush, 1200); } }
+  async function flush() {
+    if (!DB || !ME.id || syncOff || !dirty) return;
+    if (saving) { saveT = setTimeout(flush, 600); return; }
+    saving = true; dirty = false;
+    try { await DB.doc('results/' + ME.id).set(STATE); SYNC = 'ok'; }
+    catch (e) { if (e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')) { syncOff = true; SYNC = 'off'; } else { dirty = true; SYNC = 'err'; } }
+    saving = false; if (S.view === 'home') render();
+  }
+  async function boot() {
+    if (window.__STANDALONE) {
+      if (LMS.init()) {
+        MODE = 'scorm'; const nm = LMS.name(), sid = LMS.id(); ME = { id: sid ? 'lms:' + sid : null, name: nm };
+        STATE = loadLocal(); const r = LMS.load();
+        if (r && (r.updated || 0) > (STATE.updated || 0)) { STATE = r; saveLocal(); } else if (STATE.updated) LMS.save();
+        window.addEventListener('pagehide', LMS.finish); window.addEventListener('beforeunload', LMS.finish);
+      } else { MODE = 'local'; STATE = loadLocal(); }
+      BOOTED = true; render(); return;
+    }
+    for (let i = 0; i < 8 && !(window.claude && window.claude.use); i++) await new Promise(r => setTimeout(r, 250));
+    try {
+      if (window.claude && window.claude.use) {
+        try { USER = await window.claude.use('user'); } catch (e) { USER = null; }
+        try { DB = await window.claude.use('db'); } catch (e) { DB = null; }
+        if (USER) { try { const m = await USER.me(); ME = { id: m.id, name: m.name || '' }; ADMIN = await USER.canEdit(); } catch (e) { /* identité absente */ } }
+      }
+      STATE = loadLocal();
+      if (DB && ME.id) {
+        SYNC = 'ok';
+        try {
+          const snap = await DB.doc('results/' + ME.id).get();
+          if (snap.exists) { const r = snap.data(); if (r && r.v === 1 && (r.updated || 0) > (STATE.updated || 0)) { STATE = JSON.parse(JSON.stringify(r)); saveLocal(); } else if ((STATE.updated || 0) > ((r && r.updated) || 0)) { dirty = true; flush(); } }
+          else if (STATE.updated) { dirty = true; flush(); }
+        } catch (e) { SYNC = 'err'; }
+        if (ADMIN) { try { DB.collection('results').onSnapshot(snap => { ALL = snap.docs.map(d => ({ id: d.id, data: d.data() })); if (S.view === 'suivi') render(); }, () => { /* abonnement interrompu */ }); } catch (e) { /* ignoré */ } }
+      }
+    } catch (e) { /* mode hors suivi */ }
+    BOOTED = true; render();
+  }
+
+  /* ---------- séries de questions ---------- */
+  let S = { view: 'home', focus: null };
+  function inst(n, g) { const q = g.make(); q.nid = n.id; q.gid = n.id + '.' + g.id; q.label = g.label; q.kind = g.kind; q.tag = g.tag || ''; q.done = false; q.val = ''; q.sel = null; if (q.kind === 'class') q.place = q.items.map(() => null); return q; }
+  function buildSeries(n, size) {
+    size = size || 6;
+    const non = shuffle(n.gens.filter(g => g.kind !== 'qcm')), qc = shuffle(n.gens.filter(g => g.kind === 'qcm'));
+    const m = Math.min(qc.length, 2), k = Math.min(non.length, size - m);
+    let gs = non.slice(0, k).concat(qc.slice(0, m)); if (gs.length < size) gs = gs.concat(qc.slice(m, m + size - gs.length));
+    return shuffle(gs).map(g => inst(n, g));
+  }
+  function buildGeneral() {
+    let list = []; NOTIONS.forEach(n => { const non = n.gens.filter(g => g.kind !== 'qcm'), qc = n.gens.filter(g => g.kind === 'qcm'); list.push({ n, g: pick(Math.random() < .65 && non.length ? non : qc) }); });
+    const used = {}; list.forEach(x => used[x.n.id + x.g.id] = 1);
+    let guard = 0; while (list.length < 10 && guard++ < 100) { const n = pick(NOTIONS), g = pick(n.gens); if (!used[n.id + g.id]) { used[n.id + g.id] = 1; list.push({ n, g }); } }
+    return shuffle(list).map(x => inst(x.n, x.g));
+  }
+  function start(nid) { S = { view: 'series', nid, qs: nid ? buildSeries(NID[nid]) : buildGeneral(), i: 0, sel: null, focus: null }; firstFocus(); render(); }
+  function firstFocus() { const q = S.qs[S.i]; S.focus = q && q.kind === 'num' ? '#ans' : null; }
+  const cur = () => S.qs[S.i];
+
+  function parseNum(s) { s = String(s).trim().replace(/[\s  ]/g, '').replace(',', '.').replace('−', '-'); if (!/^-?\d*\.?\d+(e-?\d+)?$/i.test(s)) return NaN; return parseFloat(s); }
+  function check() {
+    const q = cur(); if (!q || q.done) return;
+    if (q.kind === 'num') {
+      const v = parseNum(q.val);
+      if (isNaN(v)) { q.msg = 'Entre un nombre, par exemple 12,5.'; S.focus = '#ans'; render(); return; }
+      const tol = Math.max(Math.abs(q.ans) * q.tol, q.abs || 0, 1e-9);
+      q.v = v; q.ok = Math.abs(v - q.ans) <= tol; q.msg = '';
+      if (!q.ok) { const t = (q.traps || []).find(t => Math.abs(v - t.v) <= Math.max(Math.abs(t.v) * .02, 1e-9)); q.trap = t ? t.msg : ''; }
+    } else if (q.kind === 'qcm') {
+      if (q.sel == null) return; q.ok = q.sel === q.correct;
+    } else {
+      if (q.place.some(p => p == null)) return; q.ok = q.items.every((it, i) => q.place[i] === it.c);
+    }
+    q.done = true; record(q, q.ok); S.focus = '#nextbtn'; render();
+  }
+  function next() {
+    if (S.i < S.qs.length - 1) { S.i++; S.sel = null; firstFocus(); render(); window.scrollTo(0, 0); return; }
+    const ok = S.qs.filter(q => q.ok).length, pct = Math.round(ok / S.qs.length * 100);
+    if (S.nid) { const s = ns(S.nid); s.series++; s.last = pct; s.best = Math.max(s.best || 0, pct); persist(); }
+    S.view = 'bilan'; S.pct = pct; S.ok = ok; S.focus = null; render(); window.scrollTo(0, 0);
+  }
+
+  /* ---------- vues ---------- */
+  function masteryLine() { return NOTIONS.map(n => { const m = mastery(STATE.notions[n.id]); return SHORT[n.id] + ' ' + (m == null ? '—' : Math.round(m * 100) + ' %'); }).join(' · '); }
+  const nomLine = () => 'Élève : ' + (NOM || ME.name || '(nom à compléter)');
+  function textSeries() {
+    const wrong = Array.from(new Set(S.qs.filter(q => !q.ok).map(q => q.label)));
+    return ['Fiche de révision 1re SI, séquence 1 — ' + (S.nid ? NID[S.nid].name : 'Révision générale'), nomLine(), 'Date : ' + dateFr(), 'Série : ' + S.ok + '/' + S.qs.length + ' (' + S.pct + ' %)', 'À revoir : ' + (wrong.length ? wrong.join(' ; ') : 'rien, série réussie'), 'Maîtrise actuelle (20 dernières réponses) : ' + masteryLine()].join('\n');
+  }
+  function textGlobal() {
+    const lines = NOTIONS.map(n => { const st = STATE.notions[n.id], m = mastery(st), stt = status(st); return '- ' + n.name + ' : ' + (m == null ? 'pas commencé' : Math.round(m * 100) + ' % (' + stt.t.toLowerCase() + ', ' + st.n + ' réponses, ' + (st.series || 0) + ' série' + ((st.series || 0) > 1 ? 's' : '') + ')'); });
+    return ['Fiche de révision 1re SI, séquence 1 — bilan global', nomLine(), 'Date : ' + dateFr(), 'Maîtrise sur les 20 dernières réponses de chaque notion :'].concat(lines).join('\n');
+  }
+  function sendBox(text) {
+    return `<section class="sec"><h3>Bilan à envoyer à ton enseignant</h3><div class="ans"><label for="nom">Ton nom</label><input id="nom" class="wide" autocomplete="name" value="${esc(NOM || ME.name || '')}" placeholder="Prénom Nom"></div><textarea id="txt" class="txt" readonly rows="8" aria-label="Texte du bilan">${esc(text)}</textarea><div class="row"><button class="btn" data-act="copy">Copier le bilan</button><span class="dim" id="cpmsg" role="status"></span></div><p class="hintline">Colle ce texte dans Pronote, l’ENT ou un mail.</p></section>`;
+  }
+  function recap() {
+    return `<button class="back" data-act="home">← Toutes les notions</button><h1 class="title">Mon bilan</h1>${sendBox(textGlobal())}`;
+  }
+  function nav() {
+    const learn = S.view !== 'suivi';
+    return `<nav class="nav"><div class="eyebrow">Première SI · Séquence 1</div><div class="tabs"><button class="tab" data-act="home" ${learn ? 'aria-current="page"' : ''}>Réviser</button>${ADMIN ? `<button class="tab" data-act="suivi" ${!learn ? 'aria-current="page"' : ''}>Suivi de la classe</button>` : ''}</div></nav>`;
+  }
+  function syncNote() {
+    if (!BOOTED) return '';
+    if (MODE === 'scorm') return '';
+    if (!DB || !ME.id) return '<p class="note">Tes résultats restent sur cet appareil. Utilise « Mon bilan à envoyer » pour les transmettre à ton enseignant.</p>';
+    if (SYNC === 'off') return '<p class="note">Ton accès est en lecture seule : tes résultats ne sont pas transmis à ton enseignant et restent sur cet appareil.</p>';
+    if (SYNC === 'err') return '<p class="note">La transmission de tes résultats a échoué. Elle sera retentée à ta prochaine réponse.</p>';
+    return '';
+  }
+  function cardHtml(n) {
+    const st = STATE.notions[n.id], stt = status(st), m = mastery(st), pct = m == null ? '—' : Math.round(m * 100) + ' %';
+    return `<article class="card"><div><h2>${n.name}</h2><p>${n.sub}</p></div><div class="meter"><div class="bar ${stt.c}" role="img" aria-label="Maîtrise ${pct}"><i style="width:${m == null ? 0 : Math.round(m * 100)}%"></i></div><span class="pct">${pct}</span></div><div class="row"><span class="pill ${stt.c}">${stt.t}</span>${st && st.series ? `<span class="dim">${st.series} série${st.series > 1 ? 's' : ''} · meilleur ${st.best} %</span>` : ''}</div><div class="row"><button class="btn" data-act="start" data-n="${n.id}">S’entraîner</button><button class="btn ghost" data-act="rappel" data-n="${n.id}">À retenir</button></div></article>`;
+  }
+  function home() {
+    const done = NOTIONS.filter(n => status(STATE.notions[n.id]).k === 'good').length;
+    const total = NOTIONS.reduce((s, n) => s + ((STATE.notions[n.id] || {}).n || 0), 0);
+    return `<section class="hero"><div><div class="eyebrow">Fiche de révision interactive</div><h1>Analyser un produit</h1><p>SysML, chaînes d’énergie et d’information. Entraîne-toi notion par notion. Les diagrammes changent à chaque essai et chaque réponse est corrigée aussitôt, avec l’explication.</p></div><div class="score"><b>${done}<small>/${NOTIONS.length}</small></b><span>notions acquises · ${total} réponse${total > 1 ? 's' : ''} données</span><div class="row end"><button class="btn ghost" data-act="recap">Mon bilan à envoyer</button></div></div></section>${syncNote()}<div class="grid">${NOTIONS.map(cardHtml).join('')}</div><article class="card general"><div><h2>Révision générale</h2><p>10 questions mêlées sur les trois notions, comme avant une évaluation.</p></div><button class="btn" data-act="start" data-n="">Lancer les 10 questions</button></article>`;
+  }
+  function rappel() {
+    const n = NID[S.nid];
+    const sec = n.rappel.map(s => {
+      let h = `<section class="sec"><h3>${s.t}</h3>`;
+      (s.f || []).forEach(f => h += `<div class="f">${f}</div>`);
+      (s.p || []).forEach(p => h += `<p>${p}</p>`);
+      if (s.tbl) h += '<div class="tblwrap"><table class="rap">' + s.tbl.map((r, k) => '<tr>' + r.map(c => k ? `<td>${c}</td>` : `<th>${c}</th>`).join('') + '</tr>').join('') + '</table></div>';
+      return h + '</section>';
+    }).join('');
+    return `<button class="back" data-act="home">← Toutes les notions</button><h1 class="title">${n.name}</h1>${sec}<div class="row"><button class="btn" data-act="start" data-n="${n.id}">S’entraîner sur cette notion</button></div>`;
+  }
+  const kindLabel = q => q.tag || (q.kind === 'num' ? 'Question numérique' : q.kind === 'qcm' ? 'QCM' : 'Classement');
+  function body(q) {
+    let h = q.html;
+    if (q.kind === 'qcm') {
+      h += '<div class="opts">' + q.options.map((o, i) => {
+        let c = 'opt', tag = '';
+        if (q.done) { if (i === q.correct) { c += ' right'; tag = '✓ Bonne réponse'; } else if (i === q.sel) { c += ' wrong'; tag = '✗ Ta réponse'; } } else if (q.sel === i) c += ' sel';
+        return `<button class="${c}" data-act="opt" data-i="${i}" data-opt="${i}" ${q.done ? 'disabled' : ''}><span class="l">${'ABCD'[i]}</span><span>${o}</span><span class="tag">${tag}</span></button>`;
+      }).join('') + '</div>';
+      if (!q.done) h += `<div class="ans"><button class="btn" data-act="check" ${q.sel == null ? 'disabled' : ''}>Valider</button></div>`;
+    } else if (q.kind === 'num') {
+      h += `<form class="ans" data-form="num"><label for="ans">Ta réponse</label><input id="ans" name="ans" inputmode="decimal" autocomplete="off" value="${esc(q.val)}" ${q.done ? 'disabled' : ''} aria-describedby="u"><span class="unit" id="u">${q.unit || '(sans unité)'}</span>${q.done ? '' : '<button class="btn" type="submit">Valider</button>'}</form>`;
+      if (q.msg) h += `<p class="err">${q.msg}</p>`;
+    } else {
+      const placed = c => q.items.map((it, i) => ({ it, i })).filter(x => q.place[x.i] === c);
+      const chip = (x, extra) => { let c = 'chip', t = x.it.t; if (q.done) { const right = q.place[x.i] === x.it.c; c += right ? ' right' : ' wrong'; t = (right ? '✓ ' : '✗ ') + t + (right ? '' : ` <small>→ ${q.cats[x.it.c]}</small>`); } else if (S.sel === x.i) c += ' sel'; return `<button class="${c}" data-act="chip" data-i="${x.i}" data-chip="${x.i}" draggable="${!q.done}" ${q.done ? 'disabled' : ''}>${t}</button>`; };
+      const bank = q.items.map((it, i) => ({ it, i })).filter(x => q.place[x.i] == null);
+      h += `<p class="hintline">${q.done ? '' : 'Touche un élément, puis la zone où le placer. Tu peux aussi le glisser-déposer.'}</p>`;
+      if (!q.done) h += `<div class="bank" aria-label="Éléments à classer">${bank.length ? bank.map(x => chip(x)).join('') : '<span class="dim">Tout est placé : tu peux valider.</span>'}</div>`;
+      h += '<div class="zones">' + q.cats.map((c, k) => `<div class="zone ${S.sel != null ? 'armed' : ''}" role="group" aria-label="Zone ${esc(c)}" tabindex="${q.done ? -1 : 0}" data-act="zone" data-c="${k}" data-zone="${k}"><b>${c}</b><div class="in">${placed(k).map(x => chip(x)).join('')}</div></div>`).join('') + '</div>';
+      if (!q.done) h += `<div class="ans"><button class="btn" data-act="check" ${q.place.some(p => p == null) ? 'disabled' : ''}>Valider</button></div>`;
+    }
+    return h;
+  }
+  function feedback(q) {
+    const nb = S.i === S.qs.length - 1;
+    let h = `<div class="fb ${q.ok ? 'ok' : 'ko'}" role="status"><h4>${q.ok ? 'Bonne réponse' : 'Ce n’est pas ça'}</h4>`;
+    if (q.kind === 'num' && !q.ok) h += `<p>Ta réponse : <b>${nf(q.v, 6)} ${q.unit || ''}</b></p>`;
+    if (!q.ok && q.trap) h += `<p>${q.trap}</p>`;
+    h += `<p class="sol">${q.sol}</p></div><div class="next"><button class="btn" id="nextbtn" data-act="next">${nb ? 'Voir le bilan' : 'Question suivante'}</button></div>`;
+    return h;
+  }
+  function series() {
+    const q = cur(), title = S.nid ? NID[S.nid].name : 'Révision générale';
+    const steps = S.qs.map((x, k) => `<i class="${k === S.i ? (x.done ? (x.ok ? 'ok' : 'ko') : 'cur') : x.done ? (x.ok ? 'ok' : 'ko') : ''}"></i>`).join('');
+    return `<button class="back" data-act="home">← Quitter la série</button><div class="qhead"><strong>${title}</strong><span class="dim">Question ${S.i + 1} sur ${S.qs.length}</span></div><div class="steps" aria-hidden="true">${steps}</div><div class="q"><div class="kind">${kindLabel(q)}${S.nid ? '' : ' · ' + SHORT[q.nid]}</div>${body(q)}${q.done ? feedback(q) : ''}</div>`;
+  }
+  function bilan() {
+    const msg = S.pct >= 80 ? 'Très bien, cette notion est solide.' : S.pct >= 50 ? 'C’est en bonne voie. Relis les corrections puis refais une série.' : 'Prends le temps de relire « À retenir », puis refais une série.';
+    const wrong = {}; S.qs.filter(q => !q.ok).forEach(q => wrong[q.nid] = 1);
+    const rev = Object.keys(wrong).map(id => `<button class="btn ghost" data-act="rappel" data-n="${id}">Relire : ${NID[id].name}</button>`).join('');
+    return `<h1 class="title">Bilan de la série</h1><div class="sec"><div class="big">${S.ok}<small style="font-size:.5em;color:var(--ink-2)"> / ${S.qs.length}</small></div><p>${msg}</p></div><ul class="rec">${S.qs.map(q => `<li><span class="m ${q.ok ? 'ok' : 'ko'}">${q.ok ? '✓ Juste' : '✗ À revoir'}</span><span>${q.label}${S.nid ? '' : ` <span class="dim">· ${NID[q.nid].name}</span>`}</span></li>`).join('')}</ul>${sendBox(textSeries())}<div class="row"><button class="btn" data-act="start" data-n="${S.nid || ''}">Refaire une série</button>${rev}<button class="btn ghost" data-act="home">Toutes les notions</button></div>`;
+  }
+  function suivi() {
+    if (!DB) return '<div class="empty">Le suivi de la classe est disponible quand la page est ouverte avec ton compte enseignant.</div>';
+    const docs = ALL.filter(d => d.data && d.data.v === 1 && d.data.notions);
+    if (!docs.length) return '<h1 class="title">Suivi de la classe</h1><div class="empty">Aucun résultat pour l’instant. Les élèves apparaissent ici dès leur première réponse, s’ils ouvrent le lien avec leur compte (accès Contributeur).</div>';
+    docs.sort((a, b) => (b.data.updated || 0) - (a.data.updated || 0));
+    const avg = NOTIONS.map(n => { const ms = docs.map(d => mastery(d.data.notions[n.id])).filter(m => m != null); return { n, k: ms.length, m: ms.length ? ms.reduce((s, x) => s + x, 0) / ms.length : null }; });
+    const withData = avg.filter(a => a.m != null).sort((a, b) => a.m - b.m), weak = withData[0];
+    const cls = m => m == null ? '' : m >= .8 ? 'good' : m >= .5 ? 'warn' : 'bad';
+    const head = '<tr><th>Élève</th>' + NOTIONS.map(n => `<th title="${n.name}">${SHORT[n.id]}</th>`).join('') + '<th>Dernière activité</th><th>À revoir</th></tr>';
+    const rows = docs.map((d, k) => {
+      const cells = NOTIONS.map(n => { const st = d.data.notions[n.id], m = mastery(st); return m == null ? '<td class="c"><span class="cell">—</span></td>' : `<td class="c"><span class="cell ${cls(m)}">${Math.round(m * 100)} %</span><div class="dim">${st.n} rép.</div></td>`; }).join('');
+      const low = NOTIONS.filter(n => status(d.data.notions[n.id]).k === 'low').map(n => `<span class="pill bad">${SHORT[n.id]}</span>`).join(' ');
+      const dt = d.data.updated ? new Date(d.data.updated) : null;
+      return `<tr><td><span data-uid="${esc(d.id)}" data-k="${k + 1}">Élève ${k + 1}</span>${d.id === ME.id ? ' <span class="dim">(toi)</span>' : ''}</td>${cells}<td class="dim">${dt ? dt.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + dt.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '—'}</td><td>${low || '<span class="dim">—</span>'}</td></tr>`;
+    }).join('');
+    const avgRow = '<tr class="avg"><td>Moyenne de la classe</td>' + avg.map(a => `<td class="c">${a.m == null ? '—' : `<span class="cell ${cls(a.m)}">${Math.round(a.m * 100)} %</span>`}</td>`).join('') + '<td></td><td></td></tr>';
+    const agg = {}; docs.forEach(d => Object.keys(d.data.errors || {}).forEach(g => { const e = d.data.errors[g]; const a = agg[g] || (agg[g] = [0, 0]); a[0] += e[0]; a[1] += e[1]; }));
+    const hard = Object.keys(agg).filter(g => GEN[g] && agg[g][0] >= 3 && agg[g][1] > 0).sort((a, b) => agg[b][1] / agg[b][0] - agg[a][1] / agg[a][0] || agg[b][1] - agg[a][1]).slice(0, 6);
+    const totalAns = docs.reduce((s, d) => s + NOTIONS.reduce((t, n) => t + ((d.data.notions[n.id] || {}).n || 0), 0), 0);
+    return `<h1 class="title">Suivi de la classe</h1><p class="dim">${docs.length} élève${docs.length > 1 ? 's' : ''} · ${totalAns} réponses${weak ? ` · notion la plus fragile : <b>${weak.n.name}</b> (${Math.round(weak.m * 100)} % en moyenne)` : ''}. La maîtrise porte sur les 20 dernières réponses de chaque notion.</p><div class="dash"><table class="dt">${head}${rows}${avgRow}</table></div>${hard.length ? `<section class="sec" style="margin-top:14px"><h3>Points durs de la classe</h3><ul class="hard">${hard.map(g => `<li><span class="m">${Math.round(agg[g][1] / agg[g][0] * 100)} %</span><span>${GEN[g].g.label} <span class="dim">· ${GEN[g].n.name} · ${agg[g][1]} erreur${agg[g][1] > 1 ? 's' : ''} sur ${agg[g][0]}</span></span></li>`).join('')}</ul></section>` : ''}`;
+  }
+
+  async function fillNames() {
+    const spans = Array.from($app.querySelectorAll('[data-uid]')); if (!spans.length || !USER) return;
+    const ids = spans.map(s => s.getAttribute('data-uid'));
+    try {
+      const ps = await USER.profiles(ids);
+      spans.forEach(s => { const id = s.getAttribute('data-uid'), p = ps[id]; const nm = p && p.name; if (nm) { s.textContent = nm; } });
+    } catch (e) { /* noms indisponibles */ }
+  }
+  function render() {
+    const v = S.view;
+    const main = v === 'home' ? home() : v === 'rappel' ? rappel() : v === 'series' ? series() : v === 'bilan' ? bilan() : v === 'recap' ? recap() : suivi();
+    $app.innerHTML = `<div class="wrap">${nav()}${main}<footer class="foot">M. Montezume — Sciences de l’Ingénieur — Lycée Chevalier de Saint-Georges</footer></div>`;
+    if (v === 'suivi') fillNames();
+    if (S.focus) { const el = $app.querySelector(S.focus); S.focus = null; if (el) { try { el.focus({ preventScroll: false }); } catch (e) { el.focus(); } } }
+  }
+
+  /* ---------- événements ---------- */
+  function place(i, c) { const q = cur(); if (!q || q.done || i == null) return; q.place[i] = c; S.sel = null; S.focus = '[data-zone="' + c + '"]'; render(); }
+  $app.addEventListener('click', ev => {
+    const t = ev.target.closest('[data-act]'); if (!t || t.disabled) return;
+    const a = t.getAttribute('data-act'), q = S.view === 'series' ? cur() : null;
+    if (a === 'home') { S = { view: 'home' }; render(); window.scrollTo(0, 0); }
+    else if (a === 'recap') { S = { view: 'recap' }; render(); window.scrollTo(0, 0); }
+    else if (a === 'copy') copyBilan();
+    else if (a === 'suivi') { S = { view: 'suivi' }; render(); }
+    else if (a === 'rappel') { S = { view: 'rappel', nid: t.getAttribute('data-n') }; render(); window.scrollTo(0, 0); }
+    else if (a === 'start') { start(t.getAttribute('data-n') || null); window.scrollTo(0, 0); }
+    else if (a === 'opt' && q && !q.done) { q.sel = +t.getAttribute('data-i'); S.focus = '[data-opt="' + q.sel + '"]'; render(); }
+    else if (a === 'check') check();
+    else if (a === 'next') next();
+    else if (a === 'chip' && q && !q.done) {
+      const i = +t.getAttribute('data-i');
+      if (q.place[i] != null && S.sel != null && S.sel !== i) { place(S.sel, q.place[i]); return; }
+      if (q.place[i] != null) { q.place[i] = null; S.sel = i; S.focus = '[data-chip="' + i + '"]'; } else { S.sel = S.sel === i ? null : i; S.focus = '[data-chip="' + i + '"]'; }
+      render();
+    }
+    else if (a === 'zone' && q && !q.done && S.sel != null) place(S.sel, +t.getAttribute('data-c'));
+  });
+  $app.addEventListener('keydown', ev => {
+    const z = ev.target.closest && ev.target.closest('[data-zone]');
+    if (z && ev.target === z && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); const q = cur(); if (q && !q.done && S.sel != null) place(S.sel, +z.getAttribute('data-c')); }
+  });
+  $app.addEventListener('input', ev => {
+    if (ev.target.id === 'ans') { const q = cur(); if (q) q.val = ev.target.value; }
+    else if (ev.target.id === 'nom') {
+      NOM = ev.target.value.trim(); try { localStorage.setItem('si-1re-s1-nom', NOM); } catch (e) { /* ignoré */ }
+      const ta = $app.querySelector('#txt'); if (ta) ta.value = S.view === 'bilan' ? textSeries() : textGlobal();
+    }
+  });
+  function copyBilan() {
+    const ta = $app.querySelector('#txt'), msg = $app.querySelector('#cpmsg'); if (!ta) return;
+    const manual = () => { ta.focus(); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch (e) { /* ignoré */ } if (msg) msg.textContent = ok ? 'Bilan copié.' : 'Le texte est sélectionné : copie-le avec Ctrl+C (ou en appui long sur mobile).'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(ta.value).then(() => { if (msg) msg.textContent = 'Bilan copié.'; }, manual); } else manual();
+  }
+  $app.addEventListener('submit', ev => { ev.preventDefault(); if (ev.target.getAttribute('data-form') === 'num') { const q = cur(), inp = $app.querySelector('#ans'); if (q && inp) q.val = inp.value; check(); } });
+  let drag = null;
+  $app.addEventListener('dragstart', ev => { const c = ev.target.closest && ev.target.closest('[data-chip]'); if (!c) return; drag = +c.getAttribute('data-chip'); try { ev.dataTransfer.setData('text/plain', String(drag)); ev.dataTransfer.effectAllowed = 'move'; } catch (e) { /* ignoré */ } });
+  $app.addEventListener('dragover', ev => { const z = ev.target.closest && ev.target.closest('[data-zone]'); if (z && drag != null) { ev.preventDefault(); z.classList.add('over'); } });
+  $app.addEventListener('dragleave', ev => { const z = ev.target.closest && ev.target.closest('[data-zone]'); if (z) z.classList.remove('over'); });
+  $app.addEventListener('drop', ev => { const z = ev.target.closest && ev.target.closest('[data-zone]'); if (z && drag != null) { ev.preventDefault(); const i = drag; drag = null; place(i, +z.getAttribute('data-c')); } });
+  $app.addEventListener('dragend', () => { drag = null; });
+
+  STATE = loadLocal();
+  render();
+  boot();
+})();
+
+</script>
+</body>
+</html>
